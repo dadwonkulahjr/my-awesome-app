@@ -1,0 +1,36 @@
+﻿@model Customer
+@{
+    ViewData["Title"] = "Customer Details";
+    string phonePath = "~/images/iamtuse_uploads/" + (Model.PhotoPath ?? "no-image.png");
+}
+
+<div class="border backgroundWhite container shadow" style="margin-top:40px;">
+    <h3 class="text-success"><i class="fas fa-info-circle"></i>&nbsp;@ViewData["CustomerDetails"]</h3>
+    <hr />
+    <div class="card-deck m-auto" style="width:355px;">
+        <div class="card ">
+            <div class="card-header bg-success">
+                <h3 class="text-center text-white" style="font-style:italic;font-family:Verdana;">@Model.Name</h3>
+            </div>
+            <img src="@phonePath" asp-append-version="true" class="img-thumbnail card-img-top img-fluid" />
+            <div class="card-body text-center">
+                <h3><b><i>Address: @Model.Address</i></b></h3>
+                <h3><b><i>Gender: @Model.Gender</i></b></h3>
+            </div>
+
+            <div class="card-footer bg-success text-center">
+                <a asp-action="upsert" asp-controller="admin" class="btn btn-secondary" asp-route-id="@Model.CustomerId">
+                    <i class="far fa-edit"></i>&nbsp; Edit</a>
+                <a asp-action="index" asp-controller="admin" class="btn btn-secondary">
+                    <i class="fas fa-long-arrow-alt-left"></i>&nbsp;Back to List
+                </a>
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+
+</div>

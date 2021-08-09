@@ -1,0 +1,117 @@
+﻿@model CustomerEditViewModel
+@{
+    var photoPath = "~/images/iamtuse_uploads/" + (Model.ExistingPhotoPath ?? "no-image.png");
+
+    if (Model.CustomerId == 0)
+    {
+        //Create
+        ViewData["Title"] = "Create new customer";
+    }
+    else
+    {
+        //Update
+        ViewData["Title"] = "Update existing customer";
+
+    }
+}
+
+<form method="post" enctype="multipart/form-data">
+    <div class="container">
+        @if (Model.CustomerId != 0)
+        {
+            <input type="hidden" asp-for="@Model.ExistingPhotoPath" />
+            <input type="hidden" asp-for="@Model.CustomerId" />
+        }
+    <div class="row px-2 mx-2 backgroundWhite border shadow" style="margin-top:30px;">
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+        <div class="col-12 px-3" style="border-bottom:1px solid #325d88">
+            <h2 class="text-success"><i class="fas fa-user-plus"></i>&nbsp;&nbsp;@(Model.CustomerId != 0 ? "Update existing customer" : "Create new customer")</h2>
+        </div>
+        <hr />
+        <div class="col-8 pt-3">
+            <div class="form-group row">
+                <div class="col-3">
+                    <label asp-for="Name"></label>
+                </div>
+                <div class="col-9">
+                    <input asp-for="Name" class="form-control" placeholder="Name..." />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-3">
+                    <label asp-for="Address"></label>
+                </div>
+                <div class="col-9">
+                    <input asp-for="Address" class="form-control" placeholder="Address..." />
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-3">
+                    <label asp-for="Gender"></label>
+                </div>
+                <div class="col-9">
+                    <select class="custom-select" asp-for="Gender" asp-items="Html.GetEnumSelectList<Gender>()">
+                        <option value="">-Choose gender--</option>
+                    </select>
+                    <span asp-validation-for="Gender" class="text-danger"></span>
+                </div>
+            </div>
+            @if (Model.CustomerId == 0)
+            {
+                //Create
+
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="Photo"></label>
+                    </div>
+                    <div class="col-9">
+                        <input asp-for="Photo" id="uploadBox" />
+                    </div>
+                </div>
+            }
+            else
+            {
+                //Update
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="Photo"></label>
+                    </div>
+                    <div class="col-9">
+                        <input asp-for="Photo" id="uploadBox" />
+                    </div>
+                </div>
+            }
+            <div class="form-group row">
+                <div class="col-9 offset-3">
+                    <div class="row">
+                        <div class="col-6 col-12">
+                            <button type="submit" class="btn btn-primary form-control" style="height:50px;">
+                                <i class="fas fa-plus"></i>&nbsp;@(Model.CustomerId != 0 ? "Update existing customer" : "Create new customer")
+                            </button>
+                        </div>
+                        <div class="col-12 mt-2">
+                            <a class="btn btn-success form-control" asp-action="Index" style="height:50px;">
+                                <i class="fas fa-long-arrow-alt-left"></i>&nbsp;Back To List
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-4 p4">
+            <img src="@photoPath" class="rounded-circle img-fluid" id="uploadBox" asp-append-version="true" />
+        </div>
+    </div>
+     
+
+    </div>
+</form>
+
+@section Scripts{
+
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/upsertPage.js"></script>
+}

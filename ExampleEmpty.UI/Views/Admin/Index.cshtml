@@ -1,0 +1,108 @@
+﻿@model List<Customer>
+@{
+    ViewData["Title"] = "List of Customers";
+}
+<style>
+    th, td {
+        text-align: center;
+    }
+</style>
+<div class="border backgroundWhite container shadow" style="margin-top:30px;">
+    <h3 class="text-success"><i class="fas fa-users"></i>&nbsp;@ViewData["ListOfCustomers"]</h3>
+    <div class="text-right">
+        <a asp-action="Upsert" asp-controller="Admin" class="btn btn-success"><i class="far fa-plus-square"></i>&nbsp;&nbsp;Create new customer record</a>
+    </div>
+    <hr />
+    @if (Model.Any())
+    {
+
+
+<form method="post" asp-controller="Admin" asp-action="Delete">
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Gender</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            @Model[i].Name
+                        </td>
+                        <td>
+                            @Model[i].Address
+                        </td>
+                        <td>
+                            @Model[i].Gender
+                        </td>
+                        <td>
+                            <div class="row ml-1">
+                                <a class="btn btn-success text-white"
+                                   style="cursor:pointer;width:100px;" asp-action="upsert"
+                                   asp-route-id="@Model[i].CustomerId">
+                                    <i class="far fa-edit"></i>Edit
+                                </a>
+                                <a class="btn btn-primary text-white"
+                                   style="cursor:pointer;width:100px;"
+                                   asp-action="Details"
+                                   asp-route-id="@Model[i].CustomerId">
+                                    <i class="fas fa-eye"></i>Details
+                                </a>
+                                <button class="btn btn-danger text-white"
+                                   style="cursor:pointer;width:100px;" type="submit"onclick="return validateUser()"
+                                    asp-action="delete"asp-route-id="@Model[i].CustomerId">
+                                    <i class="far fa-trash-alt"></i>Delete
+                                </button>
+                            </div>
+
+
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</form>
+
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Gender</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <p>No record yet to be display!</p>
+                        </td>
+                        <td>
+                            <p>No record yet to be display!</p>
+                        </td>
+                        <td>
+                            <p>No record yet to be display!</p>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+@section Scripts{
+    <script src="~/js/customerIndexPage.js"></script>
+}
