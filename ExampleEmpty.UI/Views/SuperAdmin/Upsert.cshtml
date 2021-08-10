@@ -10,42 +10,114 @@
     }
 }
 
-<form method="post" asp-action="upsert" asp-controller="superadmin">
-    <input type="hidden" asp-for="RoleId" />
+
+<form method="post" asp-action="upsert">
+    <input hidden="hidden" asp-for="RoleId" />
     <div class="container">
         <div class="row px-2 mx-2 backgroundWhite border shadow" style="margin-top:30px;">
-            <div class="text-danger" asp-validation-summary="All"></div>
+            <div class="text-danger" asp-validation-summary="ModelOnly"></div>
             <div class="col-12 px-3" style="border-bottom:1px solid #325d88">
-                <h2 class="text-success"><i class="fas fa-plus-circle"></i>@(Model.RoleId == string.Empty ? "Create Role" : "Update Role")</h2>
+                <h2 class="text-success"><i class="far fa-edit"></i>&nbsp;@(Model.RoleId == string.Empty ? "Create Role" : "Update Role")</h2>
             </div>
             <hr />
-            <div class="col-6 pt-3">
+            <div class="col-8 pt-3">
+                @if (Model.RoleId != string.Empty)
+                {
+                    <div class="form-group row">
+                        <div class="col-3">
+                            <label asp-for="RoleId"></label>
+                        </div>
+                        <div class="col-9">
+                            <input asp-for="RoleId" class="form-control" disabled="disabled" />
+                        </div>
+                    </div>
+                }
+               
                 <div class="form-group row">
                     <div class="col-3">
-                        <label asp-for="RoleName" class="col-form-label"></label>
+                        <label asp-for="RoleName"></label>
                     </div>
                     <div class="col-9">
-                        <input asp-for="RoleName" class="form-control" placeholder="Rolename..." />
+                        <input asp-for="RoleName" class="form-control" placeholder="Role name..." />
                         <span asp-validation-for="RoleName" class="text-danger"></span>
                     </div>
                 </div>
+                <div class="form-group row">
+                    <div class="col-9 offset-3">
+                        <div class="row">
+                            <div class="col-6 col-12">
+                                <button type="submit" class="btn btn-primary form-control" style="height:50px;">
+                                    @(Model.RoleId == string.Empty ? "Create Role" : "Update Role")&nbsp;<i class="far fa-edit"></i>
+                                </button>
+                            </div>
+                            <div class="col-12 mt-2">
+                                <a class="btn btn-success form-control" asp-action="allroles" style="height:50px;">
+                                    <i class="fas fa-long-arrow-alt-left"></i>&nbsp;Back To List
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @if (Model.RoleId != string.Empty)
+                {
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 offset-2">
+                                <div class="card-deck">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4><i class="fas fa-users"></i>&nbsp;User in this Role</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            @if (Model.Users.Any())
+                                            {
+                                                //Code
+                                                foreach (var user in Model.Users)
+                                                {
+                                                    @user
+                                                }
+                                            }
+                                            else
+                                            {
+                                                //Code
+                                                <p class="card-title">No users has been added to this role.</p>
+                                                <p class="card-title">Click the button below to add user in a role.</p>
+                                            }
+                                        </div>
+                                        <div class="card-footer">
+                                            <a asp-action="edituserinrole" asp-controller="superadmin" asp-route-roleId="@Model.RoleId" class="btn btn-primary btn-block m-3">
+                                                <i class="fas fa-user-plus"></i>&nbsp;Add Or Remove User&nbsp;<i class="fas fa-trash-alt"></i>
+                                            </a>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        @*  <div class="text-danger col-sm-12" asp-validation-summary="All"></div>*@
+                    </div>
+                }
             </div>
 
-            <div class="col-4">
-                <div class="form-group row">
-                    <button type="submit" class="btn btn-success mt-3">@(Model.RoleId == string.Empty ? "Create Role": "Update Role")&nbsp;<i class="fas fa-plus-square"></i></button>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="form-group row">
-                    <a asp-action="allroles" class="btn btn-secondary mt-3">Back to List &nbsp;<i class="fas fa-arrow-circle-left"></i></a>
-                </div>
-            </div>
+
         </div>
+
+
     </div>
 </form>
 
-@section Scripts{
 
+
+@section Scripts{
     <partial name="_ValidationScriptsPartial" />
 }
+
+
+
+
+
+
+
+
