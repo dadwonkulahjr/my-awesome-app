@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace ExampleEmpty.UI.Models.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Customer> Customers { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)

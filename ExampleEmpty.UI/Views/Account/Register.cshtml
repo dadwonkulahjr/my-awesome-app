@@ -6,7 +6,7 @@
 
 @*One Love Form*@
 <div class="container">
-    <div class="row justify-content-center" style="margin-top:5%">
+    <div class="row justify-content-center" style="margin-top:3%">
         <div class="col-sm-12 col col-md-6 col-lg-6">
             <div class="card-deck">
                 <div class="card" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
@@ -37,13 +37,47 @@
                                         <input asp-for="ConfirmPassword" placeholder="Confirm Password..." class="form-control" />
                                         <span class="text-danger" asp-validation-for="ConfirmPassword"></span>
                                     </div>
+                                    <div class="form-row py-2">
+                                        <div class="col">
+                                            <div>
+                                                <input asp-for="FirstName" placeholder="Firstname..." class="form-control" autofocus />
+                                                <span class="text-danger" asp-validation-for="FirstName"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div>
+                                                <input asp-for="LastName" placeholder="Lastname..." class="form-control" />
+                                                <span class="text-danger" asp-validation-for="LastName"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row py-2">
+                                        <div class="col">
+                                            <div>
+                                                <select asp-for="Gender" asp-items="Html.GetEnumSelectList<Gender>()" class="custom-select">
+                                                    <option value="">--Choose gender--</option>
+                                                </select>
+                                                <span class="text-danger" asp-validation-for="Gender"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div>
+                                                <input asp-for="Address" placeholder="Address..." class="form-control" />
+                                                <span class="text-danger" asp-validation-for="Address"></span>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="py-2">
                                         <button type="submit" class="btn btn-success form-control">
                                             <i class="fas fa-user-plus"></i>&nbsp;Register
                                         </button>
                                     </div>
                                 </div>
-
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="text-danger" asp-validation-summary="All"></div>
+                                    </div>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -52,50 +86,6 @@
         </div>
     </div>
 </div>
-
-@*<div class="py-4 my-4">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="row form-group">
-            <div class="col-sm-8">
-                <div class="card shadow">
-                    <form method="post" asp-controller="account" asp-action="register">
-                        <div class="card-body px-lg-5 pt-4">
-                            <h3 class="text-center col-12 py-4 text-success">
-                                Register New User!<br />
-                                <i class="far fa-smile"></i>
-                            </h3>
-                            <hr />
-                            <div class="form-row py-2">
-                                <div class="col">
-                                    <div>
-                                        <input asp-for="Email" placeholder="Email..." class="form-control" autofocus />
-                                        <span class="text-danger" asp-validation-for="Email"></span>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div>
-                                        <input asp-for="Password" placeholder="Password..." class="form-control" />
-                                        <span class="text-danger" asp-validation-for="Password"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="py-2">
-                                <input asp-for="ConfirmPassword" placeholder="Confirm Password..." class="form-control" />
-                                <span class="text-danger" asp-validation-for="ConfirmPassword"></span>
-                            </div>
-                            <div class="py-2">
-                                <button type="submit" class="btn btn-success form-control">
-                                    <i class="fas fa-user-plus"></i>&nbsp;Register
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-
-                </div>
-            </div>
-        </div>
-    </div>*@
-
 
 @section Scripts{
 

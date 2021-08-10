@@ -101,3 +101,6 @@ C:\Users\Dad S. Wonkulah Jr\source\repos\ExampleEmptySol\ExampleEmpty.UI\bin\Deb
 C:\Users\Dad S. Wonkulah Jr\source\repos\ExampleEmptySol\ExampleEmpty.UI\bin\Debug\net5.0\NLog.Extensions.Logging.dll
 C:\Users\Dad S. Wonkulah Jr\source\repos\ExampleEmptySol\ExampleEmpty.UI\bin\Debug\net5.0\NLog.Web.AspNetCore.dll
 C:\Users\Dad S. Wonkulah Jr\source\repos\ExampleEmptySol\ExampleEmpty.UI\obj\Debug\net5.0\Razor\Views\Account\Register.cshtml.g.cs
+C:\Users\Dad S. Wonkulah Jr\source\repos\ExampleEmptySol\ExampleEmpty.UI\obj\Debug\net5.0\Razor\Views\Account\Login.cshtml.g.cs
+C:\Users\Dad S. Wonkulah Jr\source\repos\ExampleEmptySol\ExampleEmpty.UI\obj\Debug\net5.0\Razor\Views\SuperAdmin\Upsert.cshtml.g.cs
+C:\Users\Dad S. Wonkulah Jr\source\repos\ExampleEmptySol\ExampleEmpty.UI\obj\Debug\net5.0\Razor\Views\SuperAdmin\AllRoles.cshtml.g.cs

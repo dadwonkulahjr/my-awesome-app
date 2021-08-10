@@ -10,13 +10,21 @@ namespace ExampleEmpty.UI.ServiceCollectionExtention
         {
 
             app.UseStaticFiles();
+
             app.UseRouting();
+            /*
+             * Endpoint ExampleEmpty.UI.Controllers.AdminController.Upsert (ExampleEmpty.UI)
+             contains authorization metadata, but a middleware was not found that supports authorization.
+            Configure your application startup by adding app.UseAuthorization() inside the call to Configure(..) in the application startup code. The call to app.UseAuthorization() must appear between app.UseRouting() and app.UseEndpoints(. **/
+             
+            app.UseAuthentication();
+            app.UseAuthorization();
+
 
             app.UseOpenApi();
             app.UseSwaggerUi3();
 
-            app.UseAuthentication();
-
+          
             app.UseEndpoints((_config) =>
             {
                 _config.MapControllerRoute(
@@ -24,10 +32,7 @@ namespace ExampleEmpty.UI.ServiceCollectionExtention
                     pattern: "{controller=Admin}/{action=Index}/{id?}"
                     );
             });
-            //app.Run(async (context) =>
-            //{
-            //    await context.Response.WriteAsync("Hello, World", CancellationToken.None);
-            //});
+          
             return app;
         }
     }

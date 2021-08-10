@@ -1,0 +1,77 @@
+﻿@model List<IdentityRole>
+@{
+    
+    ViewData["Title"] = "All Roles";
+}
+<div class="border backgroundWhite container shadow" style="margin-top:30px;">
+    <h3 class="text-success"><i class="fas fa-users"></i>&nbsp;@ViewData["Roles"]</h3>
+    <div class="text-right">
+        <a asp-action="upsert" class="btn btn-success"><i class="far fa-plus-square"></i>&nbsp;&nbsp;Create new role record</a>
+    </div>
+    <hr />
+    <form method="post">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Role Id</th>
+                        <th>Name</th>
+                        <th>ConcurrencyStamp</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Any())
+                    {
+                        for (int i = 0; i < Model.Count; i++)
+                        {
+                            <tr>
+                                <td>
+                                    @Model[i].Id.ToString()
+                                </td>
+                                <td>
+                                    @Model[i].Name
+                                </td>
+                                <td>
+                                    @Model[i].ConcurrencyStamp
+                                </td>
+                                <td>
+                                    <a class="btn btn-success text-white"
+                                       style="cursor:pointer;width:100px;"
+                                       asp-route-id="@Model[i].Id" asp-action="upsert">
+                                        <i class="far fa-edit"></i>Edit
+                                    </a>
+                                    <button class="btn btn-danger text-white"
+                                            style="cursor:pointer;width:100px;" type="submit"
+                                            asp-action="delete" asp-route-id="@Model[i].Id">
+                                        <i class="far fa-trash-alt"></i>Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td>No Role Id</td>
+                            <td>No Name</td>
+                            <td>No ConcurrencyStamp</td>
+                            <td>
+                                <a class="btn btn-success text-white"
+                                   style="cursor:pointer;width:100px;"
+                                   >
+                                    <i class="far fa-edit"></i>Edit
+                                </a>
+                                <button class="btn btn-danger text-white"
+                                        style="cursor:pointer;width:100px;" type="submit"
+                                    >
+                                    <i class="far fa-trash-alt"></i>Delete
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>

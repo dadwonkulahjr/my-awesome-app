@@ -1,0 +1,51 @@
+﻿@model CreateRoleViewModel
+@{
+    if (Model.RoleId == string.Empty)
+    {
+        ViewData["Title"] = "Create Role";
+    }
+    else
+    {
+        ViewData["Title"] = "Update Role";
+    }
+}
+
+<form method="post" asp-action="upsert" asp-controller="superadmin">
+    <input type="hidden" asp-for="RoleId" />
+    <div class="container">
+        <div class="row px-2 mx-2 backgroundWhite border shadow" style="margin-top:30px;">
+            <div class="text-danger" asp-validation-summary="All"></div>
+            <div class="col-12 px-3" style="border-bottom:1px solid #325d88">
+                <h2 class="text-success"><i class="fas fa-plus-circle"></i>@(Model.RoleId == string.Empty ? "Create Role" : "Update Role")</h2>
+            </div>
+            <hr />
+            <div class="col-6 pt-3">
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="RoleName" class="col-form-label"></label>
+                    </div>
+                    <div class="col-9">
+                        <input asp-for="RoleName" class="form-control" placeholder="Rolename..." />
+                        <span asp-validation-for="RoleName" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-4">
+                <div class="form-group row">
+                    <button type="submit" class="btn btn-success mt-3">@(Model.RoleId == string.Empty ? "Create Role": "Update Role")&nbsp;<i class="fas fa-plus-square"></i></button>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-group row">
+                    <a asp-action="allroles" class="btn btn-secondary mt-3">Back to List &nbsp;<i class="fas fa-arrow-circle-left"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+
+    <partial name="_ValidationScriptsPartial" />
+}

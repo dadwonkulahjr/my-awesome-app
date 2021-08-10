@@ -1,6 +1,7 @@
 ﻿using ExampleEmpty.UI.Models;
 using ExampleEmpty.UI.Models.Repository.IRepository;
 using ExampleEmpty.UI.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -10,6 +11,7 @@ using System.Linq;
 
 namespace ExampleEmpty.UI.Controllers
 {
+
     public class AdminController : Controller
     {
         private readonly ICustomerRepository _unitOfWork;
@@ -21,29 +23,23 @@ namespace ExampleEmpty.UI.Controllers
             _unitOfWork = unitOfWork;
             _webHostEnvironment = webHostEnvironment;
             _logger = logger;
-            
+
         }
         [HttpGet]
+        [AllowAnonymous]
         public ViewResult Index()
         {
             ViewData["ListOfCustomers"] = "Customer List";
-            var list = _unitOfWork.Get().ToList();
+            var list = _unitOfWork.Get()
+                                  .OrderBy(c => c.Name)
+                                  .ToList();
             return View(list);
 
         }
         [HttpGet]
+        [AllowAnonymous]
         public ViewResult Details(int? id)
         {
-            for (int i = 1; i <= 5; i++)
-            {
-                _logger.LogTrace($"Log from trace with Id = {i}");
-                _logger.LogDebug($"Log from debug with Id = {i}");
-                _logger.LogInformation($"Log from information with Id = {i}");
-                _logger.LogWarning($"Log from warning with Id = {i}");
-                _logger.LogError($"Log from error with Id = {i}");
-                _logger.LogCritical($"Log from critical with Id = {i}");
-            }
-          
             if (id.HasValue)
             {
                 Customer myCus = _unitOfWork.Get(id.Value);
@@ -81,6 +77,7 @@ namespace ExampleEmpty.UI.Controllers
 
             return View(cus);
         }
+
         [HttpGet]
         public IActionResult Upsert(int? id)
         {
@@ -126,6 +123,7 @@ namespace ExampleEmpty.UI.Controllers
 
             return NotFound(customer);
         }
+
         [HttpPost]
         public IActionResult Upsert(CustomerEditViewModel model)
         {
@@ -236,6 +234,7 @@ namespace ExampleEmpty.UI.Controllers
 
 
         }
+
         private void DeleteUserImageOnTheServer(CustomerEditViewModel model)
         {
             string filePath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "iamtuse_uploads", model.ExistingPhotoPath);
@@ -245,6 +244,7 @@ namespace ExampleEmpty.UI.Controllers
                 System.IO.File.Delete(filePath);
             }
         }
+
         [HttpPost]
         public IActionResult Delete(int id)
         {

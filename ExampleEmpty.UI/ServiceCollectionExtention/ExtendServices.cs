@@ -1,7 +1,10 @@
-﻿using ExampleEmpty.UI.Models.Data;
+﻿using ExampleEmpty.UI.Models;
+using ExampleEmpty.UI.Models.Data;
 using ExampleEmpty.UI.Models.Repository;
 using ExampleEmpty.UI.Models.Repository.IRepository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -17,7 +20,16 @@ namespace ExampleEmpty.UI.ServiceCollectionExtention
     {
         public static IServiceCollection ExtendService(this IServiceCollection services,IConfiguration configuration)
         {
-            services.AddMvc()
+            services.AddMvc(options =>
+            {
+                //Apply Authorization Globally!
+                //to all controllers in the application!
+
+                var policy = new AuthorizationPolicyBuilder()
+                            .RequireAuthenticatedUser()
+                                .Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
+            })
                 .AddControllersAsServices()
                 .AddXmlSerializerFormatters();
             services.AddScoped<ICustomerRepository, CustomerSQLRepository>();
@@ -25,9 +37,11 @@ namespace ExampleEmpty.UI.ServiceCollectionExtention
                  options.UseSqlServer(
                      configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
-            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
                 //Code...
+                options.Password.RequiredUniqueChars = 3;
+                options.Password.RequiredLength = 10;
 
             }).AddEntityFrameworkStores<ApplicationDbContext>();
 
