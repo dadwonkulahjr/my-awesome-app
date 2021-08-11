@@ -9,7 +9,7 @@
         <div class="row px-2 mx-2 backgroundWhite border shadow" style="margin-top:30px;">
             <div class="text-danger" asp-validation-summary="ModelOnly"></div>
             <div class="col-12 px-3" style="border-bottom:1px solid #325d88">
-                <h2 class="text-success"><i class="far fa-edit"></i>&nbsp;Remove Or Add</h2>
+                <h2 class="text-success"><i class="far fa-edit"></i>&nbsp;Add Or Remove user from @ViewBag.DynamicRoleName role!</h2>
             </div>
             <hr />
 
@@ -24,7 +24,7 @@
                         <input hidden="hidden" asp-for="@Model[i].Username" />
                         <div class="form-check m-1">
                             <input asp-for="@Model[i].IsSelected" class="form-check-input" />
-                            &nbsp;<i class="far fa-edit"></i>
+                            @*&nbsp;<i class="far fa-edit"></i>*@
                             <h5>
                                 <label class="form-check-label" asp-for="@Model[i].IsSelected">
                                     @Model[i].Username
@@ -35,8 +35,12 @@
                     <div class="text-danger" asp-validation-summary="All"></div>
                 </div>
                 <div class="card-footer text-white">
-                    <input type="submit" class="btn btn-primary" value="Update" />
-                    <a class="btn btn-primary" asp-route-roleId="@roleId">Back to List</a>
+                    <button type="submit" class="btn btn-primary">
+                        Update &nbsp;<i class="fas fa-edit"></i>
+                    </button>
+                    <a class="btn btn-success" asp-route-id="@roleId" asp-controller="superadmin" asp-action="upsert">
+                        <i class="fas fa-long-arrow-alt-left"></i>&nbsp;Back to List
+                    </a>
                 </div>
             </div>
         </div>

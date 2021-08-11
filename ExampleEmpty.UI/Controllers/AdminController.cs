@@ -12,6 +12,8 @@ using System.Linq;
 namespace ExampleEmpty.UI.Controllers
 {
 
+    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "SuperAdministrator")]
     public class AdminController : Controller
     {
         private readonly ICustomerRepository _unitOfWork;
@@ -37,7 +39,6 @@ namespace ExampleEmpty.UI.Controllers
 
         }
         [HttpGet]
-        [AllowAnonymous]
         public ViewResult Details(int? id)
         {
             if (id.HasValue)

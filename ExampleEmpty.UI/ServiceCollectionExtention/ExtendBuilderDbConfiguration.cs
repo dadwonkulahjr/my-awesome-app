@@ -12,9 +12,13 @@ namespace ExampleEmpty.UI.ServiceCollectionExtention
             {
                 return new List<Customer>()
                 {
-                    new(1, "Tom Smith", "Jallah Town", Gender.Male),
-                    new(2, "Sara Collins", "Sinkor", Gender.Female),
-                    new(3, "Test User 1", "Bye Pass", Gender.Unknown)
+                    new(1, "Dad S Wonkulah Jr", "Caldwell Bongo Market", Gender.Male),
+                    new(2, "Precious K Wonkulah", "Caldwell Bongo Market", Gender.Female),
+                    new(3, "Darius F Wonkulah", "Caldwell Bongo Market", Gender.Male),
+                    new(4, "Dacious F Wonkulah ", "Caldwell Bongo Market", Gender.Female),
+                    new(5, "Leo Max", "Roberts Field Highway", Gender.Male),
+                    new(6, "Test User 1", "Test Location", Gender.Unknown),
+                    new(7, "Test User 2", "Test Location ", Gender.Unknown)
                 };
             }
         }

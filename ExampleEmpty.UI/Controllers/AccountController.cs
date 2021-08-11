@@ -130,8 +130,14 @@ namespace ExampleEmpty.UI.Controllers
             {
                 return Json($"The specified email address {email} is already taken in system.");
             }
+        }
 
-
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult AccessDenied(string returnUrl)
+        {
+            ViewData["AccessDeniedMessage"] = "Access Denied";
+            return View();
         }
 
 

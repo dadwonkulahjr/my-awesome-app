@@ -4,7 +4,7 @@
     ViewData["Title"] = "All Roles";
 }
 <div class="border backgroundWhite container shadow" style="margin-top:30px;">
-    <h3 class="text-success"><i class="fas fa-users"></i>&nbsp;@ViewData["Roles"]</h3>
+    <h3 class="text-success"><i class="fas fa-tachometer-alt"></i>&nbsp;@ViewData["Roles"]</h3>
     <div class="text-right">
         <a asp-action="upsert" class="btn btn-success"><i class="far fa-plus-square"></i>&nbsp;&nbsp;Create new role record</a>
     </div>
@@ -15,7 +15,7 @@
                 <thead>
                     <tr>
                         <th>Role Id</th>
-                        <th>Name</th>
+                        <th>Role Name</th>
                         <th>ConcurrencyStamp</th>
                         <th>Actions</th>
                     </tr>

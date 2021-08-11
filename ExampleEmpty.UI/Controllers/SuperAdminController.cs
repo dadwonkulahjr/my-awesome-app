@@ -1,5 +1,6 @@
 ﻿using ExampleEmpty.UI.Models;
 using ExampleEmpty.UI.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -8,6 +9,8 @@ using System.Threading.Tasks;
 
 namespace ExampleEmpty.UI.Controllers
 {
+    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "SuperAdministrator")]
     public class SuperAdminController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -55,6 +58,7 @@ namespace ExampleEmpty.UI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Upsert(CreateRoleViewModel model)
         {
             if (!ModelState.IsValid) { return View(model); }
@@ -137,38 +141,70 @@ namespace ExampleEmpty.UI.Controllers
             }
             else
             {
-                List<EditUserInRoleViewModel> editUserInRoleViewModel = new();
-                if (editUserInRoleViewModel.Count == 0)
-                {
-                    EditUserInRoleViewModel editUserInRoleModel = new();
-                    _userManager.Users.ToList().ForEach(async (a) =>
-                    {
-                        a.Id = editUserInRoleModel.UserId;
-                        a.UserName = editUserInRoleModel.Username;
-                        if (await _userManager.IsInRoleAsync(a, findRole.Name))
-                        {
-                            editUserInRoleModel.IsSelected = true;
-                        }
-                        else
-                        {
-                            editUserInRoleModel.IsSelected = true;
-                        }
+                ViewBag.DynamicRoleName = findRole.Name;
 
-                        editUserInRoleViewModel.Add(editUserInRoleModel);
-                    });
-                    if (editUserInRoleViewModel.Count == 0)
+                var model = new List<EditUserInRoleViewModel>();
+                foreach (var user in _userManager.Users.ToList())
+                {
+                    EditUserInRoleViewModel editUserInRoleViewModel = new(user.Id, user.UserName);
+                    var checkUser = await _userManager.IsInRoleAsync(user, findRole.Name);
+                    if (checkUser)
                     {
-                        return RedirectToAction("upsert", new { id = roleId });
+                        editUserInRoleViewModel.IsSelected = true;
                     }
                     else
                     {
-                        return View(editUserInRoleViewModel);
+                        editUserInRoleViewModel.IsSelected = false;
                     }
+
+                    model.Add(editUserInRoleViewModel);
                 }
+
+                return View(model);
+
             }
 
+        }
 
-            return RedirectToAction("upsert", new { id = roleId });
+
+        [HttpPost]
+        public async Task<IActionResult> EditUserInRole(List<EditUserInRoleViewModel> model, string roleId)
+        {
+            var role = await _roleManager.FindByIdAsync(roleId);
+            if (role == null)
+            {
+                ViewBag.ErrorMessage = $"The role with the specified Id {roleId} cannot be found.";
+                return View("NotFound");
+            }
+
+            for (int i = 0; i < model.Count; i++)
+            {
+                var user = await _userManager.FindByIdAsync(model[i].UserId);
+                IdentityResult result = null;
+                if (model[i].IsSelected && !(await _userManager.IsInRoleAsync(user, role.Name)))
+                {
+                    result = await _userManager.AddToRoleAsync(user, role.Name);
+                }
+                else if (!model[i].IsSelected && await _userManager.IsInRoleAsync(user, role.Name))
+                {
+                    result = await _userManager.RemoveFromRoleAsync(user, role.Name);
+                }
+                else { continue; }
+
+                if (result.Succeeded)
+                {
+                    if (i < (model.Count - 1))
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        return RedirectToAction("upsert", new { id = role.Id });
+                    }
+                }
+
+            }
+            return RedirectToAction("upsert", new { id = role.Id });
         }
     }
 }

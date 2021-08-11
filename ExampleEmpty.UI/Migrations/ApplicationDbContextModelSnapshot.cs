@@ -133,23 +133,51 @@ namespace ExampleEmpty.UI.Migrations
                         new
                         {
                             CustomerId = 1,
-                            Address = "Jallah Town",
+                            Address = "Caldwell Bongo Market",
                             Gender = 1,
-                            Name = "Tom Smith"
+                            Name = "Dad S Wonkulah Jr"
                         },
                         new
                         {
                             CustomerId = 2,
-                            Address = "Sinkor",
+                            Address = "Caldwell Bongo Market",
                             Gender = 2,
-                            Name = "Sara Collins"
+                            Name = "Precious K Wonkulah"
                         },
                         new
                         {
                             CustomerId = 3,
-                            Address = "Bye Pass",
+                            Address = "Caldwell Bongo Market",
+                            Gender = 1,
+                            Name = "Darius F Wonkulah"
+                        },
+                        new
+                        {
+                            CustomerId = 4,
+                            Address = "Caldwell Bongo Market",
+                            Gender = 2,
+                            Name = "Dacious F Wonkulah "
+                        },
+                        new
+                        {
+                            CustomerId = 5,
+                            Address = "Roberts Field Highway",
+                            Gender = 1,
+                            Name = "Leo Max"
+                        },
+                        new
+                        {
+                            CustomerId = 6,
+                            Address = "Test Location",
                             Gender = 3,
                             Name = "Test User 1"
+                        },
+                        new
+                        {
+                            CustomerId = 7,
+                            Address = "Test Location ",
+                            Gender = 3,
+                            Name = "Test User 2"
                         });
                 });
 

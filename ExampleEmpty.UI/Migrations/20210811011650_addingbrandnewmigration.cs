@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ExampleEmpty.UI.Migrations
 {
-    public partial class AddingInitialMigration : Migration
+    public partial class addingbrandnewmigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -26,6 +26,10 @@ namespace ExampleEmpty.UI.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Gender = table.Column<int>(type: "int", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -108,8 +112,8 @@ namespace ExampleEmpty.UI.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -153,8 +157,8 @@ namespace ExampleEmpty.UI.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -171,17 +175,16 @@ namespace ExampleEmpty.UI.Migrations
             migrationBuilder.InsertData(
                 table: "tblCustomer",
                 columns: new[] { "CustomerId", "Address", "Gender", "Name", "PhotoPath" },
-                values: new object[] { 1, "Jallah Town", 1, "Tom Smith", null });
-
-            migrationBuilder.InsertData(
-                table: "tblCustomer",
-                columns: new[] { "CustomerId", "Address", "Gender", "Name", "PhotoPath" },
-                values: new object[] { 2, "Sinkor", 2, "Sara Collins", null });
-
-            migrationBuilder.InsertData(
-                table: "tblCustomer",
-                columns: new[] { "CustomerId", "Address", "Gender", "Name", "PhotoPath" },
-                values: new object[] { 3, "Bye Pass", 3, "Test User 1", null });
+                values: new object[,]
+                {
+                    { 1, "Caldwell Bongo Market", 1, "Dad S Wonkulah Jr", null },
+                    { 2, "Caldwell Bongo Market", 2, "Precious K Wonkulah", null },
+                    { 3, "Caldwell Bongo Market", 1, "Darius F Wonkulah", null },
+                    { 4, "Caldwell Bongo Market", 2, "Dacious F Wonkulah ", null },
+                    { 5, "Roberts Field Highway", 1, "Leo Max", null },
+                    { 6, "Test Location", 3, "Test User 1", null },
+                    { 7, "Test Location ", 3, "Test User 2", null }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
