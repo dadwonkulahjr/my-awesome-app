@@ -2,10 +2,10 @@
 
 namespace ExampleEmpty.UI.AppUtilities
 {
-    public class EmailDomainValidator : ValidationAttribute
+    public class EmailDomainValidatorAttribute : ValidationAttribute
     {
         private readonly string emailDomain;
-        public EmailDomainValidator(string emailDomain)
+        public EmailDomainValidatorAttribute(string emailDomain)
         {
             this.emailDomain = emailDomain;
         }

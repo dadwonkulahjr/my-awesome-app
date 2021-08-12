@@ -106,3 +106,7 @@ C:\Users\Dad S. Wonkulah Jr\source\repos\ExampleEmptySol\ExampleEmpty.UI\obj\Deb
 C:\Users\Dad S. Wonkulah Jr\source\repos\ExampleEmptySol\ExampleEmpty.UI\obj\Debug\net5.0\Razor\Views\Account\AccessDenied.cshtml.g.cs
 C:\Users\Dad S. Wonkulah Jr\source\repos\ExampleEmptySol\ExampleEmpty.UI\obj\Debug\net5.0\Razor\Views\Account\Login.cshtml.g.cs
 C:\Users\Dad S. Wonkulah Jr\source\repos\ExampleEmptySol\ExampleEmpty.UI\obj\Debug\net5.0\Razor\Views\Account\Register.cshtml.g.cs
+C:\Users\Dad S. Wonkulah Jr\source\repos\ExampleEmptySol\ExampleEmpty.UI\obj\Debug\net5.0\Razor\Views\SuperAdmin\AllUsers.cshtml.g.cs
+C:\Users\Dad S. Wonkulah Jr\source\repos\ExampleEmptySol\ExampleEmpty.UI\obj\Debug\net5.0\Razor\Views\SuperAdmin\EditAppUser.cshtml.g.cs
+C:\Users\Dad S. Wonkulah Jr\source\repos\ExampleEmptySol\ExampleEmpty.UI\obj\Debug\net5.0\Razor\Views\SuperAdmin\ManageUserRole.cshtml.g.cs
+C:\Users\Dad S. Wonkulah Jr\source\repos\ExampleEmptySol\ExampleEmpty.UI\obj\Debug\net5.0\Razor\Views\SuperAdmin\ManageUserClaim.cshtml.g.cs

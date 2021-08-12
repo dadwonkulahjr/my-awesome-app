@@ -39,6 +39,7 @@ namespace ExampleEmpty.UI.Controllers
 
         }
         [HttpGet]
+        [AllowAnonymous]
         public ViewResult Details(int? id)
         {
             if (id.HasValue)

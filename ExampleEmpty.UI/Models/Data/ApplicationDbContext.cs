@@ -1,6 +1,7 @@
 ﻿using ExampleEmpty.UI.ServiceCollectionExtention;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Reflection;
 
 namespace ExampleEmpty.UI.Models.Data
@@ -18,6 +19,11 @@ namespace ExampleEmpty.UI.Models.Data
             base.OnModelCreating(builder);
 
             builder.SeedDbWithInitialData().ApplyConfigurationsFromAssembly(assembly: Assembly.GetExecutingAssembly());
+
+            foreach (var fk in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                fk.DeleteBehavior = DeleteBehavior.Restrict;
+            }
         }
 
 

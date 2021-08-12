@@ -1,0 +1,49 @@
+﻿@model ManageUserClaimViewModel
+@{
+    ViewData["Title"] = "Edit Existing User Claim";
+  
+}
+
+<form method="post">
+    <div class="container">
+        <div class="row px-2 mx-2 backgroundWhite border shadow" style="margin-top:30px;">
+            <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+            <div class="col-12 px-3" style="border-bottom:1px solid #325d88">
+                <h2 class="text-success"><i class="far fa-edit"></i>&nbsp;Add Or Remove user claims</h2>
+            </div>
+            <hr />
+
+            <div class="card m-2" style="width:100%;">
+                <div class="card-header">
+                    <h2>Add or remove claims</h2>
+                </div>
+                <div class="card-body">
+                    @for (int i = 0; i < Model.UserClaims.Count; i++)
+                    {
+                        <input hidden="hidden" asp-for="@Model.UserId" />
+                        <input hidden="hidden" asp-for="@Model.UserClaims[i].ClaimType" />
+                        <div class="form-check m-1">
+                            <input asp-for="@Model.UserClaims[i].IsSelected" class="form-check-input" />
+                            @*&nbsp;<i class="far fa-edit"></i>*@
+                            <h5>
+                                <label class="form-check-label" asp-for="@Model.UserClaims[i].IsSelected">
+                                    @Model.UserClaims[i].ClaimType
+                                </label>
+                            </h5>
+                        </div>
+                    }
+                    <div class="text-danger" asp-validation-summary="All"></div>
+                </div>
+                <div class="card-footer text-white">
+                    <button type="submit" class="btn btn-primary">
+                        Update &nbsp;<i class="fas fa-edit"></i>
+                    </button>
+                    <a class="btn btn-success" asp-route-id="@Model.UserId" asp-action="editappuser">
+                        <i class="fas fa-long-arrow-alt-left"></i>&nbsp;Back to List
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>

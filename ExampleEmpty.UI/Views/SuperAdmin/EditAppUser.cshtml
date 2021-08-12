@@ -1,0 +1,162 @@
+﻿@model EditAppUserViewModel
+@{
+    ViewData["Title"] = "Update user";
+}
+
+<form method="post" asp-action="editappuser">
+    <div class="container">
+        <div class="row px-2 mx-2 backgroundWhite border shadow" style="margin-top:30px;">
+            <div class="col-12 px-3" style="border-bottom:1px solid #325d88">
+                <h2 class="text-success"><i class="far fa-edit"></i>&nbsp;@ViewData["UpdateUser"]</h2>
+            </div>
+            <hr />
+            <div class="col-8 pt-3 offset-2">
+                <div class="form-row py-2">
+                    <div class="col">
+                        <input asp-for="Id" class="form-control" disabled="disabled" />
+                    </div>
+                </div>
+                <div class="form-row py-2">
+                    <div class="col">
+                        <div>
+                            <input asp-for="FirstName" placeholder="Firstname..." class="form-control" />
+                            <span class="text-danger" asp-validation-for="FirstName"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div>
+                            <input asp-for="LastName" placeholder="Lastname..." class="form-control" />
+                            <span class="text-danger" asp-validation-for="LastName"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row py-2">
+                    <div class="col">
+                        <div>
+                            <input asp-for="Address" placeholder="Address..." class="form-control" />
+                            <span class="text-danger" asp-validation-for="Address"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div>
+                            <input asp-for="Email" placeholder="Email..." class="form-control" />
+                            <span class="text-danger" asp-validation-for="Email"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row py-2">
+                    <div class="col">
+                        <div>
+                            <select asp-for="Gender" asp-items="Html.GetEnumSelectList<Gender>()" class="custom-select">
+                                <option value="">--Choose gender--</option>
+                            </select>
+                            <span class="text-danger" asp-validation-for="Gender"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div>
+                            <input asp-for="Username" placeholder="Username..." class="form-control" />
+                            <span class="text-danger" asp-validation-for="Username"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row py-2">
+                    <div class="col-12">
+                        <button class="btn btn-success btn-block">
+                            Update&nbsp;<i class="far fa-edit"></i>
+                        </button>
+                        <a asp-action="getallusers" class="btn btn-primary btn-block">Back to List&nbsp;<i class="fas fa-long-arrow-alt-left"></i></a>
+                    </div>
+                    <div class="text-danger" asp-validation-summary="All"></div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-12">
+                        <div class="card-deck">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4><i class="fas fa-users"></i>&nbsp;Manage User Role</h4>
+                                </div>
+                                <div class="card-body">
+                                    @if (Model.Roles.Any())
+                                    {
+                                        //Code
+                                        foreach (var role in Model.Roles)
+                                        {
+                                            <ul>
+                                                <li><b>@role &nbsp;<i class="far fa-user"></i></b></li>
+                                            </ul>
+
+                                        }
+                                    }
+                                    else
+                                    {
+                                        //Code
+                                        <p class="card-title">No users has been added to this role.</p>
+                                        <p class="card-title">Click the button below to add user in a role.</p>
+                                    }
+                                </div>
+                                <div class="card-footer">
+                                    <a  class="btn btn-success btn-block" asp-action="editmanageuserrole" asp-route-userId="@Model.Id" asp-controller="superadmin">
+                                        Manage&nbsp;<i class="fas fa-user-cog"></i>
+                                    </a>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <br /><br />
+                <div class="row">
+                    <div class="col-sm-12 col-md-12">
+                        <div class="card-deck">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4><i class="fas fa-users"></i>&nbsp;Manage User Claims</h4>
+                                </div>
+                                <div class="card-body">
+                                    @if (Model.Claims.Any())
+                                    {
+                                        //Code
+                                        foreach (var claims in Model.Claims)
+                                        {
+                                            <ul>
+                                                <li><b>@claims &nbsp;<i class="far fa-user"></i></b></li>
+                                            </ul>
+
+                                        }
+                                    }
+                                    else
+                                    {
+                                        //Code
+                                        <p class="card-title">No users has been added to this role.</p>
+                                        <p class="card-title">Click the button below to add user in a role.</p>
+                                    }
+                                </div>
+                                <div class="card-footer">
+                                    <a class="btn btn-success btn-block" asp-route-userId="@Model.Id" asp-action="editmanageuserclaim">
+                                        Manage&nbsp;<i class="fas fa-user-cog"></i>
+                                    </a>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+    </div>
+</form>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}
+
+

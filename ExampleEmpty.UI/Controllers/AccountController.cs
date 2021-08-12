@@ -46,6 +46,10 @@ namespace ExampleEmpty.UI.Controllers
             IdentityResult result = await _userManager.CreateAsync(newUser, model.Password);
             if (result.Succeeded)
             {
+                if(_signInManager.IsSignedIn(User) && User.IsInRole("Administrator") || User.IsInRole("SuperAdministrator"))
+                {
+                    return RedirectToAction("getallusers", "superadmin");
+                }
                 await _signInManager.SignInAsync(newUser, isPersistent: false);
                 return RedirectToAction("index", "admin");
             }
@@ -134,7 +138,7 @@ namespace ExampleEmpty.UI.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public IActionResult AccessDenied(string returnUrl)
+        public IActionResult AccessDenied()
         {
             ViewData["AccessDeniedMessage"] = "Access Denied";
             return View();

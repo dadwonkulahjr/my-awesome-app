@@ -9,7 +9,7 @@ namespace ExampleEmpty.UI.ViewModels
     {
         [Required]
         [EmailAddress]
-        [EmailDomainValidator(emailDomain: "iamtuse.com", ErrorMessage = "Email domain must be iamtuse.com for successful login!")]
+        [EmailDomainValidatorAttribute(emailDomain: "iamtuse.com", ErrorMessage = "Email domain must be iamtuse.com for successful login!")]
         public string Email { get; set; }
         [Required]
         [DataType(DataType.Password)]

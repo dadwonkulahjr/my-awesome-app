@@ -30,15 +30,21 @@
                         {
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-white" asp-controller="superadmin" asp-action="allroles" id="navbardrop" data-toggle="dropdown">
-                                    Manage
+                                    Manage&nbsp; <i class="fas fa-cogs"></i>
                                 </a>
                                 <div class="dropdown-menu">
                                     @if (_signInManager.IsSignedIn(User) && User.IsInRole("Administrator"))
                                     {
-                                        <a class="dropdown-item text-dark" asp-controller="admin" asp-action="index">List</a>
+                                        <a class="dropdown-item text-dark" asp-controller="admin" asp-action="index">
+                                            List&nbsp;<i class="fas fa-list"></i>
+                                        </a>
                                     }
-                                    <a class="dropdown-item text-dark" asp-controller="superadmin" asp-action="allroles">Super Admin</a>
-                                    <a class="dropdown-item text-dark" href="#">Users</a>
+                                    <a class="dropdown-item text-dark" asp-controller="superadmin" asp-action="allroles">
+                                         Mange Roles&nbsp;<i class="fas fa-tachometer-alt"></i>
+                                    </a>
+                                    <a class="dropdown-item text-dark" asp-action="getallusers" asp-controller="superadmin">
+                                        Manage Users&nbsp;<i class="fas fa-users"></i>
+                                    </a>
                                 </div>
 
                             </li>

@@ -41,9 +41,9 @@
                                        asp-route-id="@Model[i].Id" asp-action="upsert">
                                         <i class="far fa-edit"></i>Edit
                                     </a>
-                                    <button class="btn btn-danger text-white"
+                                    <button class="btn btn-danger text-white" onclick="return confirm('Are you sure you want to delete this role? @Model[i].Name')"
                                             style="cursor:pointer;width:100px;" type="submit"
-                                            asp-action="delete" asp-route-id="@Model[i].Id">
+                                            asp-action="removerole" asp-route-roleId="@Model[i].Id">
                                         <i class="far fa-trash-alt"></i>Delete
                                     </button>
                                 </td>
