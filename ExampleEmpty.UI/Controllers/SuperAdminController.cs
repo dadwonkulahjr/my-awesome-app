@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 
 namespace ExampleEmpty.UI.Controllers
 {
-    [Authorize(Roles = "Administrator")]
-    [Authorize(Roles = "SuperAdministrator")]
+    [Authorize(Policy = "SuperAdminPolicy")]
+    //Video 105
     public class SuperAdminController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -215,7 +215,7 @@ namespace ExampleEmpty.UI.Controllers
                           .ThenBy(u => u.UserName)
                           .ThenBy(u => u.Gender)
                           .ToListAsync();
-            ViewData["AllUsers"] = "All Users";
+            ViewData["AllUsers"] = "All Register Users";
             return View("allusers", usersSorted);
         }
         [HttpGet]
@@ -240,7 +240,7 @@ namespace ExampleEmpty.UI.Controllers
                 Gender = user.Gender,
                 Address = user.Address,
                 Username = user.UserName,
-                Claims = userClaims.Select(c => c.Value).ToList(),
+                Claims = userClaims.Select(c => c.Type + " : " + c.Value).ToList(),
                 Roles = userRoles
             };
             ViewData["UpdateUser"] = "Update User";
@@ -390,7 +390,6 @@ namespace ExampleEmpty.UI.Controllers
             return View("manageuserrole", model);
         }
 
-
         [HttpPost]
         public async Task<IActionResult> EditManageUserRole(List<ManageUserRoleViewModel> model, string userId)
         {
@@ -404,7 +403,7 @@ namespace ExampleEmpty.UI.Controllers
             for (int i = 0; i < model.Count; i++)
             {
                 var role = await _roleManager.FindByIdAsync(model[i].RoleId);
-                IdentityResult result = null;
+                IdentityResult result;
                 if (model[i].IsSelected && !(await _userManager.IsInRoleAsync(user, role.Name)))
                 {
                     result = await _userManager.AddToRoleAsync(user, role.Name);
@@ -454,7 +453,7 @@ namespace ExampleEmpty.UI.Controllers
                     ClaimType = claims.Type
                 };
 
-                if (retrievedAllUserExistingClaims.Any(c => c.Type == claims.Type))
+                if (retrievedAllUserExistingClaims.Any(c => c.Type == claims.Type && c.Value == "true"))
                 {
                     userClaim.IsSelected = true;
                 }
@@ -487,9 +486,9 @@ namespace ExampleEmpty.UI.Controllers
             }
 
             result = await _userManager
-                                .AddClaimsAsync(user,
-                                model.UserClaims.Where(c => c.IsSelected)
-                                .Select(c => new Claim(c.ClaimType, c.ClaimType)));
+                            .AddClaimsAsync(user, 
+                            model.UserClaims
+                            .Select(c => new Claim(c.ClaimType, c.IsSelected ? "true " : "false")));
 
             if (!result.Succeeded)
             {
@@ -498,6 +497,14 @@ namespace ExampleEmpty.UI.Controllers
             }
 
             return RedirectToAction("editappuser", new { id = model.UserId });
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult AccessDenied()
+        {
+            ViewData["AccessDeniedMessage"] = "Access Denied";
+            return View();
         }
     }
 }

@@ -8,11 +8,12 @@ namespace ExampleEmpty.UI.ViewModels
 {
     public static class ClaimsFactory
     {
-        public static List<Claim> GetClaims = new()
+        public readonly static List<Claim> GetClaims = new()
         {
             new Claim("Create Role", "Create Role"),
             new Claim("Edit Role", "Edit Role"),
-            new Claim("Delete Role", "Delete Role")
+            new Claim("Delete Role", "Delete Role"),
+            new Claim("View Role", "View Role")
         };
     }
 }

@@ -21,11 +21,10 @@ namespace ExampleEmpty.UI
             Host.CreateDefaultBuilder(args)
                 .ConfigureLogging((hostingContext, logging) =>
                 {
-                    logging
+                         logging
                         .AddConfiguration(hostingContext.Configuration.GetSection("Logging"))
                         .AddConsole()
                         .AddDebug()
-                        .AddConsole()
                         .AddEventSourceLogger()
                         .AddNLog();
                 })

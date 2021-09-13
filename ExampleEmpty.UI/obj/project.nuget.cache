@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "V6FU766DSg4/IZNAbrxfQR9PmaYwUHL10uHNi9iXEx+tsi2p3CJdBKy9plW3TlAhml9pGA8dEqMCdGID9oV6Ew==",
+  "dgSpecHash": "AObUDivmNzi7vCDYsNzzdmXfypNfDstFy5o27XJ7N2uDfWzT+YNg4IU5AJxSOg3f8T0W+qwuAStz1jvxth79wg==",
   "success": true,
   "projectFilePath": "C:\\Users\\Dad S. Wonkulah Jr\\source\\repos\\ExampleEmptySol\\ExampleEmpty.UI\\ExampleEmpty.UI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Dad S. Wonkulah Jr\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
+    "C:\\Users\\Dad S. Wonkulah Jr\\.nuget\\packages\\microsoft.aspnetcore.authentication.google\\5.0.9\\microsoft.aspnetcore.authentication.google.5.0.9.nupkg.sha512",
     "C:\\Users\\Dad S. Wonkulah Jr\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\5.0.8\\microsoft.aspnetcore.cryptography.internal.5.0.8.nupkg.sha512",
     "C:\\Users\\Dad S. Wonkulah Jr\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\5.0.8\\microsoft.aspnetcore.cryptography.keyderivation.5.0.8.nupkg.sha512",
     "C:\\Users\\Dad S. Wonkulah Jr\\.nuget\\packages\\microsoft.aspnetcore.diagnostics.entityframeworkcore\\5.0.8\\microsoft.aspnetcore.diagnostics.entityframeworkcore.5.0.8.nupkg.sha512",

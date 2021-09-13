@@ -2,7 +2,7 @@
     ViewData["Title"] = "Exception Occured!";
 }
 
-@if (ViewBag.ExTitle == null)
+@if (ViewBag.ErrorTitle == null)
 {
     <div class="row">
         <div class="col-sm-12">
@@ -26,10 +26,10 @@
 else
 {
     <div class="border backgroundWhite container shadow text-danger" style="margin-top:40px;">
-        <h4 class="display-4"><i class="fab fa-accessible-icon"></i>&nbsp;@ViewBag.ExTitle</h4>
+        <h4 class="display-4"><i class="fab fa-accessible-icon"></i>&nbsp;@ViewBag.ErrorTitle</h4>
         <hr />
         <p>
-            @ViewBag.ExMessage
+            @ViewBag.ErrorMessage
         </p>
         <a asp-action="allroles" asp-controller="superadmin" class="btn btn-success">
             Click the link to navigate to the list of roles&nbsp;<i class="fas fa-arrow-circle-left"></i>

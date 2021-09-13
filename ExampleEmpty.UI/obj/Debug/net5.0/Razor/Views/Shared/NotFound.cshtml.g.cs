@@ -28,20 +28,27 @@ using ExampleEmpty.UI.ViewModels;
 #nullable disable
 #nullable restore
 #line 3 "C:\Users\Dad S. Wonkulah Jr\source\repos\ExampleEmptySol\ExampleEmpty.UI\Views\_ViewImports.cshtml"
-using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 4 "C:\Users\Dad S. Wonkulah Jr\source\repos\ExampleEmptySol\ExampleEmpty.UI\Views\_ViewImports.cshtml"
+using Microsoft.AspNetCore.Identity;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 5 "C:\Users\Dad S. Wonkulah Jr\source\repos\ExampleEmptySol\ExampleEmpty.UI\Views\_ViewImports.cshtml"
 using Microsoft.AspNetCore.Authorization;
 
 #line default
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"b7544c78cd5ff399aaada2dc864f4fc64943914e", @"/Views/Shared/NotFound.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"51aadda539162cc89c9156b125f3dac6f9c643d3", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"30da0b89ce35c5db3833c43b67d342a91fcf4939", @"/Views/_ViewImports.cshtml")]
     public class Views_Shared_NotFound : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-controller", "Admin", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -88,7 +95,7 @@ using Microsoft.AspNetCore.Authorization;
 #line hidden
 #nullable disable
             WriteLiteral("\r\n        </p>\r\n        <hr />\r\n    </div>\r\n    <br />\r\n    ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b7544c78cd5ff399aaada2dc864f4fc64943914e5268", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b7544c78cd5ff399aaada2dc864f4fc64943914e5478", async() => {
                 WriteLiteral("\r\n        <i class=\"fas fa-long-arrow-alt-left\"></i>&nbsp;Click the link to navigate to the list of customers!\r\n    ");
             }
             );

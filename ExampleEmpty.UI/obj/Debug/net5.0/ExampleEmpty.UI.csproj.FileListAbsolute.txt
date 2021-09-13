@@ -92,7 +92,6 @@ C:\Users\Dad S. Wonkulah Jr\source\repos\ExampleEmptySol\ExampleEmpty.UI\bin\Deb
 C:\Users\Dad S. Wonkulah Jr\source\repos\ExampleEmptySol\ExampleEmpty.UI\obj\Debug\net5.0\Razor\Views\Admin\Index.cshtml.g.cs
 C:\Users\Dad S. Wonkulah Jr\source\repos\ExampleEmptySol\ExampleEmpty.UI\obj\Debug\net5.0\Razor\Views\Admin\Upsert.cshtml.g.cs
 C:\Users\Dad S. Wonkulah Jr\source\repos\ExampleEmptySol\ExampleEmpty.UI\obj\Debug\net5.0\Razor\Views\Admin\Details.cshtml.g.cs
-C:\Users\Dad S. Wonkulah Jr\source\repos\ExampleEmptySol\ExampleEmpty.UI\obj\Debug\net5.0\Razor\Views\Admin\Delete.cshtml.g.cs
 C:\Users\Dad S. Wonkulah Jr\source\repos\ExampleEmptySol\ExampleEmpty.UI\obj\Debug\net5.0\Razor\Views\Admin\CustomerNotFound.cshtml.g.cs
 C:\Users\Dad S. Wonkulah Jr\source\repos\ExampleEmptySol\ExampleEmpty.UI\obj\Debug\net5.0\Razor\Views\Shared\NotFound.cshtml.g.cs
 C:\Users\Dad S. Wonkulah Jr\source\repos\ExampleEmptySol\ExampleEmpty.UI\obj\Debug\net5.0\Razor\Views\Shared\Error.cshtml.g.cs
@@ -103,10 +102,12 @@ C:\Users\Dad S. Wonkulah Jr\source\repos\ExampleEmptySol\ExampleEmpty.UI\bin\Deb
 C:\Users\Dad S. Wonkulah Jr\source\repos\ExampleEmptySol\ExampleEmpty.UI\obj\Debug\net5.0\Razor\Views\SuperAdmin\Upsert.cshtml.g.cs
 C:\Users\Dad S. Wonkulah Jr\source\repos\ExampleEmptySol\ExampleEmpty.UI\obj\Debug\net5.0\Razor\Views\SuperAdmin\AllRoles.cshtml.g.cs
 C:\Users\Dad S. Wonkulah Jr\source\repos\ExampleEmptySol\ExampleEmpty.UI\obj\Debug\net5.0\Razor\Views\SuperAdmin\EditUserInRole.cshtml.g.cs
-C:\Users\Dad S. Wonkulah Jr\source\repos\ExampleEmptySol\ExampleEmpty.UI\obj\Debug\net5.0\Razor\Views\Account\AccessDenied.cshtml.g.cs
 C:\Users\Dad S. Wonkulah Jr\source\repos\ExampleEmptySol\ExampleEmpty.UI\obj\Debug\net5.0\Razor\Views\Account\Login.cshtml.g.cs
 C:\Users\Dad S. Wonkulah Jr\source\repos\ExampleEmptySol\ExampleEmpty.UI\obj\Debug\net5.0\Razor\Views\Account\Register.cshtml.g.cs
 C:\Users\Dad S. Wonkulah Jr\source\repos\ExampleEmptySol\ExampleEmpty.UI\obj\Debug\net5.0\Razor\Views\SuperAdmin\AllUsers.cshtml.g.cs
 C:\Users\Dad S. Wonkulah Jr\source\repos\ExampleEmptySol\ExampleEmpty.UI\obj\Debug\net5.0\Razor\Views\SuperAdmin\EditAppUser.cshtml.g.cs
 C:\Users\Dad S. Wonkulah Jr\source\repos\ExampleEmptySol\ExampleEmpty.UI\obj\Debug\net5.0\Razor\Views\SuperAdmin\ManageUserRole.cshtml.g.cs
 C:\Users\Dad S. Wonkulah Jr\source\repos\ExampleEmptySol\ExampleEmpty.UI\obj\Debug\net5.0\Razor\Views\SuperAdmin\ManageUserClaim.cshtml.g.cs
+C:\Users\Dad S. Wonkulah Jr\source\repos\ExampleEmptySol\ExampleEmpty.UI\obj\Debug\net5.0\Razor\Views\SuperAdmin\AccessDenied.cshtml.g.cs
+C:\Users\Dad S. Wonkulah Jr\source\repos\ExampleEmptySol\ExampleEmpty.UI\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.Google.dll
+C:\Users\Dad S. Wonkulah Jr\source\repos\ExampleEmptySol\ExampleEmpty.UI\obj\Debug\net5.0\Razor\Views\Account\ConfirmEmail.cshtml.g.cs

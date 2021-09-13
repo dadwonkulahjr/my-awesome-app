@@ -4,8 +4,10 @@
 }
 @*One Love Form*@
 <div class="container">
-    <div class="row justify-content-center" style="margin-top:3%">
-        <div class="col-sm-12 col col-md-6 col-lg-6">
+    <div class="row justify-content-center" style="margin-top:2%">
+        <div class="col-sm-6">
+            <h3 class="text-success text-nowrap">Login</h3>
+            <hr />
             <div class="card-deck">
                 <div class="card" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
                     <div class="card-header text-center">
@@ -44,6 +46,11 @@
                                             <i class="fas fa-sign-in-alt"></i>&nbsp;Log in
                                         </button>
                                     </div>
+                                    <div class="py-1">
+                                        <a asp-action="index" asp-controller="admin" class="btn btn-primary form-control">
+                                            <i class="fas fa-long-arrow-alt-left"></i>&nbsp;Back to List
+                                        </a>
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-12">
@@ -52,39 +59,41 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="col-md-6 text-center">
-                            <h3 class="text-success text-nowrap">External Login</h3>
-                            <hr />
-                            @if (Model.ExternalLogins != null)
-                            {
-                                if (Model.ExternalLogins.Count == 0)
-                                {
-                                    <div>No external Logins configure</div>
-                                }
-                            }
-                            else
-                            {
-                                <form method="post" asp-controller="Account" asp-action="ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl">
-                                    <div>
-                                        @if (Model.ExternalLogins != null)
-                                        {
-                                            @foreach (var provider in Model.ExternalLogins)
-                                            {
-                                                <button type="submit" class="btn btn-primary" name="provider"
-                                                        value="@provider.Name" title="Login using your @provider.DisplayName account">
-                                                    @provider.DisplayName
-                                                </button>
-                                            }
-                                        }
 
-                                    </div>
-
-                                </form>
-                            }
-                        </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="col-6 text-center">
+            <h3 class="text-success text-nowrap">External Login</h3>
+            <hr />
+            @if (Model.ExternalLogins != null)
+            {
+                if (Model.ExternalLogins.Count == 0)
+                {
+                    <div>No external Logins configure</div>
+                }
+                else
+                {
+                    <form method="post" asp-controller="Account" asp-action="ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl">
+                        <div>
+                            @if (Model.ExternalLogins != null)
+                            {
+                                @foreach (var provider in Model.ExternalLogins)
+                                {
+                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Login using your @provider.DisplayName account">
+                                        <i class="fas fa-google"></i>&nbsp;@provider.DisplayName
+
+                                    </button>
+                                }
+                            }
+
+                        </div>
+
+                    </form>
+                }
+            }
+
         </div>
     </div>
 </div>

@@ -1,4 +1,5 @@
 ﻿@model Customer
+@inject IAuthorizationService _authorizationService
 @{
     ViewData["Title"] = "Customer Details";
     string phonePath = "~/images/iamtuse_uploads/" + (Model.PhotoPath ?? "no-image.png");
@@ -19,8 +20,12 @@
             </div>
 
             <div class="card-footer bg-success text-center">
-                <a asp-action="upsert" asp-controller="admin" class="btn btn-secondary" asp-route-id="@Model.CustomerId">
-                    <i class="far fa-edit"></i>&nbsp; Edit</a>
+                @*@if ((await _authorizationService.AuthorizeAsync(User, "EditRolePolicy")).Succeeded)
+                {*@
+                    <a asp-action="upsert" asp-controller="admin" class="btn btn-secondary" asp-route-id="@Model.CustomerId">
+                        <i class="far fa-edit"></i>&nbsp; Edit
+                    </a>
+               @* }*@
                 <a asp-action="index" asp-controller="admin" class="btn btn-secondary">
                     <i class="fas fa-long-arrow-alt-left"></i>&nbsp;Back to List
                 </a>

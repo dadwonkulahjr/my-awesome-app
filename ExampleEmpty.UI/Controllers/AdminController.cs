@@ -12,8 +12,7 @@ using System.Linq;
 namespace ExampleEmpty.UI.Controllers
 {
 
-    [Authorize(Roles = "Administrator")]
-    [Authorize(Roles = "SuperAdministrator")]
+    [Authorize(Policy = "SuperAdminPolicy")]
     public class AdminController : Controller
     {
         private readonly ICustomerRepository _unitOfWork;
@@ -36,10 +35,10 @@ namespace ExampleEmpty.UI.Controllers
                                   .OrderBy(c => c.Name)
                                   .ToList();
             return View(list);
+         
 
         }
         [HttpGet]
-        [AllowAnonymous]
         public ViewResult Details(int? id)
         {
             if (id.HasValue)
@@ -248,6 +247,7 @@ namespace ExampleEmpty.UI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "DeleteRolePolicy")]
         public IActionResult Delete(int id)
         {
             Customer findCustomerObj = _unitOfWork.Get(id);

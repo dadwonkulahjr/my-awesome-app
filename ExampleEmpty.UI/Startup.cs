@@ -17,7 +17,7 @@ namespace ExampleEmpty.UI
         }
         public void ConfigureServices(IServiceCollection services)
         {
-            ExtendServices.ExtendService(services, Configuration);
+            ExtendServiceCollection.ExtendService(services, Configuration);
         }
 
 
@@ -29,15 +29,16 @@ namespace ExampleEmpty.UI
                 {
                     SourceCodeLineCount = 1
                 };
-                ExtendConfigureServices
-                    .ExtendThisApplicationBuilder(app)
-                    .UseDeveloperExceptionPage(developerExceptionPageOptions);        
+
+                app.UseDeveloperExceptionPage(developerExceptionPageOptions);
+                ExtendApplicationBuilder.ExtendThisApplicationBuilder(app);
+                        
             }
             else
             {
                 app.UseExceptionHandler("/Error");
                 app.UseStatusCodePagesWithReExecute("/Error/{0}");
-                ExtendConfigureServices.ExtendThisApplicationBuilder(app);
+                ExtendApplicationBuilder.ExtendThisApplicationBuilder(app);
             }
 
            

@@ -1,14 +1,15 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using System.Threading;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
 
 namespace ExampleEmpty.UI.ServiceCollectionExtention
 {
-    public static class ExtendConfigureServices
+    public static class ExtendApplicationBuilder
     {
         public static IApplicationBuilder ExtendThisApplicationBuilder(this IApplicationBuilder app)
         {
-
+           
             app.UseStaticFiles();
 
             app.UseRouting();
