@@ -1,4 +1,5 @@
-﻿using ExampleEmpty.UI.Models;
+﻿using ExampleEmpty.UI.DataProtectionTokenManager;
+using ExampleEmpty.UI.Models;
 using ExampleEmpty.UI.Models.Data;
 using ExampleEmpty.UI.Models.Repository;
 using ExampleEmpty.UI.Models.Repository.IRepository;
@@ -55,9 +56,27 @@ namespace ExampleEmpty.UI.ServiceCollectionExtention
                 options.Password.RequiredLength = 10;
                 options.SignIn.RequireConfirmedEmail = true;
 
+
+                options.Tokens.EmailConfirmationTokenProvider = "CustomEmailConfirmation";
+
             }).AddEntityFrameworkStores<ApplicationDbContext>()
-            .AddDefaultTokenProviders();
-            
+            .AddDefaultTokenProviders()
+            .AddTokenProvider<CustomEmailConfirmationTokenProvider<ApplicationUser>>("CustomEmailConfirmation");
+
+            //Overide token life span for email confirmation token
+            //to 3 days before it become expire.
+            services.Configure<CustomEmailConfirmationTokenProviderOptions>(options =>
+            {
+                options.TokenLifespan = TimeSpan.FromDays(3);
+            });
+
+            //Change token life span for all tokens
+            services.Configure<DataProtectionTokenProviderOptions>(options =>
+            {
+                options.TokenLifespan = TimeSpan.FromHours(5);
+            });
+
+           
 
             services.AddSingleton<IAuthorizationHandler, ManageAdminAuthorizationRequirementHandler>();
             services.AddSingleton<IAuthorizationHandler, ManageSuperAdminAuthorizationRequirementHalder>();
@@ -66,7 +85,7 @@ namespace ExampleEmpty.UI.ServiceCollectionExtention
             {
                 options.AppendTrailingSlash = true;
                 //options.LowercaseQueryStrings = true;
-                options.LowercaseUrls = true;
+                //options.LowercaseUrls = true;
             });
 
             services.AddOpenApiDocument(options =>
@@ -118,7 +137,14 @@ namespace ExampleEmpty.UI.ServiceCollectionExtention
                         options.ClientId =
                         "396572300480-m2in5tbmmcfp224qr42s8brc23iqnl23.apps.googleusercontent.com";
                         options.ClientSecret = "XLC1q42cVsTBXEgm801n7yVm";
+                    })
+                    .AddFacebook(options =>
+                    {
+                        options.AppId = "219777956833959";
+                        options.AppSecret = "9e36f814444c091ab9140fb92b46b552";
                     });
+
+            services.AddSingleton<DataProtectionPurposeStrings>();
                    
 
             return services;

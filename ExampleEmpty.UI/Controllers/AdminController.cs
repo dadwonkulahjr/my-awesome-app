@@ -1,9 +1,12 @@
 ﻿using ExampleEmpty.UI.Models;
 using ExampleEmpty.UI.Models.Repository.IRepository;
+using ExampleEmpty.UI.Security;
 using ExampleEmpty.UI.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
@@ -18,12 +21,17 @@ namespace ExampleEmpty.UI.Controllers
         private readonly ICustomerRepository _unitOfWork;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly ILogger<AdminController> _logger;
+        private IDataProtector _dataProtector;
         public AdminController(ICustomerRepository unitOfWork,
-            IWebHostEnvironment webHostEnvironment, ILogger<AdminController> logger)
+            IWebHostEnvironment webHostEnvironment, ILogger<AdminController> logger,
+            IDataProtectionProvider dataProtectionProvider,
+            DataProtectionPurposeStrings dataProtectionPurposeStrings
+           )
         {
             _unitOfWork = unitOfWork;
             _webHostEnvironment = webHostEnvironment;
             _logger = logger;
+            _dataProtector = dataProtectionProvider.CreateProtector(dataProtectionPurposeStrings.EmployeeIdRouteValue);
 
         }
         [HttpGet]
@@ -32,108 +40,84 @@ namespace ExampleEmpty.UI.Controllers
         {
             ViewData["ListOfCustomers"] = "Customer List";
             var list = _unitOfWork.Get()
-                                  .OrderBy(c => c.Name)
-                                  .ToList();
+                                .Select(e =>
+                                {
+                                    e.EncryptedCustomerId = _dataProtector.Protect(e.CustomerId.ToString());
+                                    return e;
+                                }).ToList();
             return View(list);
-         
+
 
         }
         [HttpGet]
-        public ViewResult Details(int? id)
+        public ViewResult Details(string id)
         {
-            if (id.HasValue)
+            int employeeId = Convert.ToInt32(_dataProtector.Unprotect(id));
+
+
+            Customer myCus = _unitOfWork.Get(employeeId);
+            if (myCus == null)
             {
-                Customer myCus = _unitOfWork.Get(id.Value);
-                if (myCus == null)
-                {
-                    Response.StatusCode = 404;
-                    _logger.LogError($"The customer with the specified Id = {id.Value} cannot be found!");
-                    return View("CustomerNotFound", id.Value);
-                }
-            }
-            if (id.HasValue)
-            {
-                Customer findCustomerObj = _unitOfWork.Get(id.Value);
-                if (findCustomerObj == null)
-                {
-                    Response.StatusCode = 404;
-                    _logger.LogError($"The customer with the specified Id = {id.Value} cannot be found!");
-                    return View("CustomerNotFound", id.Value);
-                }
+                Response.StatusCode = 404;
+                _logger.LogError($"The customer with the specified Id = {employeeId} cannot be found!");
+                return View("CustomerNotFound", employeeId);
             }
 
-            if (id == null)
-            {
-                ViewData["CustomerDetails"] = "Customer Details";
-                CustomerCreateViewModel customer = new(101, "Default", "Default", Gender.Male);
-                return View(customer);
-            }
-            var cus = _unitOfWork.Get(id.Value);
-            if (cus != null)
-            {
-                ViewData["CustomerDetails"] = "Customer Details";
+            ViewData["CustomerDetails"] = "Customer Details";
 
-                return View(cus);
-            }
+            return View(myCus);
 
-            return View(cus);
+
+
         }
 
         [HttpGet]
-        public IActionResult Upsert(int? id)
+        public IActionResult Upsert(string id)
         {
-            if (id.HasValue)
+            int employeeId = Convert.ToInt32(_dataProtector.Unprotect(id));
+
+            Customer findCustomerObj = _unitOfWork.Get(employeeId);
+            if (findCustomerObj == null)
             {
-                Customer findCustomerObj = _unitOfWork.Get(id.Value);
-                if (findCustomerObj == null)
-                {
-                    Response.StatusCode = 404;
-                    _logger.LogError($"The customer with the specified Id = {id.Value} cannot be found!");
-                    return View("CustomerNotFound", id.Value);
-                }
+                Response.StatusCode = 404;
+                _logger.LogError($"The customer with the specified Id = {employeeId} cannot be found!");
+                return View("CustomerNotFound", employeeId);
             }
 
-            if (id == null)
-            {
-                CustomerEditViewModel newCus = new();
-                return View(newCus);
-            }
-
-            Customer customer = _unitOfWork.Get(id.Value);
-            if (customer != null)
+            if (findCustomerObj != null)
             {
                 CustomerEditViewModel customerEditViewModel = new()
                 {
-                    Id = customer.CustomerId,
-                    CustomerId = customer.CustomerId,
-                    Name = customer.Name,
-                    Address = customer.Address,
-                    Gender = customer.Gender
+                    CustomerId = findCustomerObj.CustomerId,
+                    EncryptedCustomerId = id,
+                    Name = findCustomerObj.Name,
+                    Address = findCustomerObj.Address,
+                    Gender = findCustomerObj.Gender
                 };
 
-                if (customer.PhotoPath != null)
+                if (findCustomerObj.PhotoPath != null)
                 {
                     if (customerEditViewModel.ExistingPhotoPath == null)
                     {
-                        customerEditViewModel.ExistingPhotoPath = customer.PhotoPath;
+                        customerEditViewModel.ExistingPhotoPath = findCustomerObj.PhotoPath;
                     }
                 }
 
                 return View(customerEditViewModel);
             }
 
-            return NotFound(customer);
+            return NotFound(findCustomerObj);
         }
 
         [HttpPost]
         public IActionResult Upsert(CustomerEditViewModel model)
         {
-
+            int employeeId = Convert.ToInt32(_dataProtector.Unprotect(model.EncryptedCustomerId));
             if (ModelState.IsValid)
             {
                 if (model != null)
                 {
-                    if (model.CustomerId == 0)
+                    if (employeeId == 0)
                     {
                         //Create Request
                         //Add new user if the user does not select an image initially!
@@ -155,12 +139,12 @@ namespace ExampleEmpty.UI.Controllers
                             //User has selected an image
                             Customer customerModel = GetCustomerModel(model);
                             _unitOfWork.Create(customerModel);
-                            return RedirectToAction("Details", new { id = customerModel.CustomerId });
+                            return RedirectToAction("Details", new { id = employeeId });
                         }
                         else
                         {
                             //User has selected an existing image
-                            Customer customer = _unitOfWork.Get(model.CustomerId);
+                            Customer customer = _unitOfWork.Get(employeeId);
 
                             if (model.Photo != null)
                             {
@@ -180,7 +164,7 @@ namespace ExampleEmpty.UI.Controllers
                     else
                     {
                         //Update Request
-                        Customer customer = _unitOfWork.Get(model.CustomerId);
+                        Customer customer = _unitOfWork.Get(employeeId);
 
                         if (model.Photo != null)
                         {
@@ -198,7 +182,7 @@ namespace ExampleEmpty.UI.Controllers
                         {
                             Customer updateCustomer = new()
                             {
-                                CustomerId = model.CustomerId,
+                                CustomerId = employeeId,
                                 Name = model.Name,
                                 Address = model.Address,
                                 Gender = model.Gender
@@ -215,7 +199,7 @@ namespace ExampleEmpty.UI.Controllers
                             Name = model.Name,
                             Gender = model.Gender,
                             Address = model.Address,
-                            CustomerId = model.CustomerId
+                            CustomerId = employeeId
                         };
 
 
@@ -248,9 +232,10 @@ namespace ExampleEmpty.UI.Controllers
 
         [HttpPost]
         [Authorize(Policy = "DeleteRolePolicy")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(string id)
         {
-            Customer findCustomerObj = _unitOfWork.Get(id);
+            int employeeId = Convert.ToInt32(_dataProtector.Unprotect(id));
+            Customer findCustomerObj = _unitOfWork.Get(employeeId);
             if (findCustomerObj.PhotoPath != null)
             {
                 CustomerEditViewModel model = new()
@@ -262,11 +247,11 @@ namespace ExampleEmpty.UI.Controllers
             }
             if (findCustomerObj == null)
             {
-                _logger.LogError($"The customer with the specified Id = {id} cannot be found!");
-                return View("CustomerNotFound", id);
+                _logger.LogError($"The customer with the specified Id = {employeeId} cannot be found!");
+                return View("CustomerNotFound", employeeId);
             }
 
-            _unitOfWork.Remove(id);
+            _unitOfWork.Remove(employeeId);
             return RedirectToAction("Index");
         }
         private string ProcessImageOnServer(CustomerCreateViewModel model)
@@ -289,9 +274,10 @@ namespace ExampleEmpty.UI.Controllers
         }
         private Customer GetCustomerModel(CustomerCreateViewModel model)
         {
+            int employeeId = Convert.ToInt32(_dataProtector.Unprotect(model.EncryptedCustomerId));
             Customer customerModel = new()
             {
-                CustomerId = model.CustomerId,
+                CustomerId = employeeId,
                 Address = model.Address,
                 Name = model.Name,
                 Gender = model.Gender,

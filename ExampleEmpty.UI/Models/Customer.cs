@@ -1,11 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ExampleEmpty.UI.Models
 {
     public class Customer
     {
         public int CustomerId { get; set; }
+        [NotMapped]
+        public string EncryptedCustomerId { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]

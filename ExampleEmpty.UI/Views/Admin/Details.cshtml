@@ -22,7 +22,7 @@
             <div class="card-footer bg-success text-center">
                 @*@if ((await _authorizationService.AuthorizeAsync(User, "EditRolePolicy")).Succeeded)
                 {*@
-                    <a asp-action="upsert" asp-controller="admin" class="btn btn-secondary" asp-route-id="@Model.CustomerId">
+                    <a asp-action="upsert" asp-controller="admin" class="btn btn-secondary" asp-route-id="@Model.EncryptedCustomerId">
                         <i class="far fa-edit"></i>&nbsp; Edit
                     </a>
                @* }*@

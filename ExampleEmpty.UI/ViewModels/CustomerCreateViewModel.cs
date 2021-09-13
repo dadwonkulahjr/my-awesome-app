@@ -1,11 +1,14 @@
 ﻿using ExampleEmpty.UI.Models;
 using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ExampleEmpty.UI.ViewModels
 {
     public class CustomerCreateViewModel
     {
+        [NotMapped]
+        public string EncryptedCustomerId { get; set; }
         public int CustomerId { get; set; }
         [Required]
         public string Name { get; set; }
