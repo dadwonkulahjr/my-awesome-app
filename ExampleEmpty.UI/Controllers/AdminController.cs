@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
@@ -21,7 +20,7 @@ namespace ExampleEmpty.UI.Controllers
         private readonly ICustomerRepository _unitOfWork;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly ILogger<AdminController> _logger;
-        private IDataProtector _dataProtector;
+        private readonly IDataProtector _protector;
         public AdminController(ICustomerRepository unitOfWork,
             IWebHostEnvironment webHostEnvironment, ILogger<AdminController> logger,
             IDataProtectionProvider dataProtectionProvider,
@@ -31,7 +30,7 @@ namespace ExampleEmpty.UI.Controllers
             _unitOfWork = unitOfWork;
             _webHostEnvironment = webHostEnvironment;
             _logger = logger;
-            _dataProtector = dataProtectionProvider.CreateProtector(dataProtectionPurposeStrings.EmployeeIdRouteValue);
+            _protector = dataProtectionProvider.CreateProtector(dataProtectionPurposeStrings.EmployeeIdRouteValue);
 
         }
         [HttpGet]
@@ -42,7 +41,7 @@ namespace ExampleEmpty.UI.Controllers
             var list = _unitOfWork.Get()
                                 .Select(e =>
                                 {
-                                    e.EncryptedCustomerId = _dataProtector.Protect(e.CustomerId.ToString());
+                                    e.EncryptedCustomerId = _protector.Protect(e.CustomerId.ToString());
                                     return e;
                                 }).ToList();
             return View(list);
@@ -52,10 +51,11 @@ namespace ExampleEmpty.UI.Controllers
         [HttpGet]
         public ViewResult Details(string id)
         {
-            int employeeId = Convert.ToInt32(_dataProtector.Unprotect(id));
+            int employeeId = Convert.ToInt32(_protector.Unprotect(id));
 
 
             Customer myCus = _unitOfWork.Get(employeeId);
+            myCus.EncryptedCustomerId = id;
             if (myCus == null)
             {
                 Response.StatusCode = 404;
@@ -74,7 +74,12 @@ namespace ExampleEmpty.UI.Controllers
         [HttpGet]
         public IActionResult Upsert(string id)
         {
-            int employeeId = Convert.ToInt32(_dataProtector.Unprotect(id));
+            if(id == null)
+            {
+                CustomerEditViewModel model = new() { };
+                return View(model);
+            }
+            int employeeId = Convert.ToInt32(_protector.Unprotect(id));
 
             Customer findCustomerObj = _unitOfWork.Get(employeeId);
             if (findCustomerObj == null)
@@ -112,7 +117,11 @@ namespace ExampleEmpty.UI.Controllers
         [HttpPost]
         public IActionResult Upsert(CustomerEditViewModel model)
         {
-            int employeeId = Convert.ToInt32(_dataProtector.Unprotect(model.EncryptedCustomerId));
+            int employeeId = 0;
+            if (model.EncryptedCustomerId != null)
+            {
+                employeeId = Convert.ToInt32(_protector.Unprotect(model.EncryptedCustomerId));
+            }
             if (ModelState.IsValid)
             {
                 if (model != null)
@@ -231,10 +240,10 @@ namespace ExampleEmpty.UI.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = "DeleteRolePolicy")]
+        //[Authorize(Policy = "DeleteRolePolicy")]
         public IActionResult Delete(string id)
         {
-            int employeeId = Convert.ToInt32(_dataProtector.Unprotect(id));
+            int employeeId = Convert.ToInt32(_protector.Unprotect(id));
             Customer findCustomerObj = _unitOfWork.Get(employeeId);
             if (findCustomerObj.PhotoPath != null)
             {
@@ -274,7 +283,7 @@ namespace ExampleEmpty.UI.Controllers
         }
         private Customer GetCustomerModel(CustomerCreateViewModel model)
         {
-            int employeeId = Convert.ToInt32(_dataProtector.Unprotect(model.EncryptedCustomerId));
+            int employeeId = Convert.ToInt32(_protector.Unprotect(model.EncryptedCustomerId));
             Customer customerModel = new()
             {
                 CustomerId = employeeId,

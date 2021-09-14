@@ -235,21 +235,21 @@ namespace ExampleEmpty.UI.Controllers
             }
         }
 
-        [AllowAnonymous]
-        [AcceptVerbs("GET", "POST")]
-        public async Task<IActionResult> CheckUserEmailAddress(string email)
-        {
-            var findEmail = await _userManager.FindByEmailAsync(email);
+        //[AllowAnonymous]
+        //[AcceptVerbs("GET", "POST")]
+        //public async Task<IActionResult> CheckUserEmailAddress(string email)
+        //{
+        //    var findEmail = await _userManager.FindByEmailAsync(email);
 
-            if (findEmail == null)
-            {
-                return Json(true);
-            }
-            else
-            {
-                return Json($"The specified email address {email} is already taken in system.");
-            }
-        }
+        //    if (findEmail == null)
+        //    {
+        //        return Json(true);
+        //    }
+        //    else
+        //    {
+        //        return Json($"The specified email address {email} is already taken in system.");
+        //    }
+        //}
 
         [HttpGet]
         [AllowAnonymous]
@@ -334,27 +334,123 @@ namespace ExampleEmpty.UI.Controllers
             {
                 var result = await _userManager.ResetPasswordAsync(user, model.Token, model.NewPassword);
 
-                if (result.Succeeded)
+                if (!result.Succeeded)
                 {
-                    return View(nameof(ResetPasswordConfirmation));
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                    return View();
                 }
+                await _signInManager.RefreshSignInAsync(user);
+                return RedirectToAction(nameof(ResetPasswordConfirmation));
 
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
-                return View(model);
+
             }
 
             return View(model);
         }
 
+        [HttpGet, AllowAnonymous]
         public IActionResult ResetPasswordConfirmation()
         {
             return View();
         }
-
+        [HttpGet, AllowAnonymous]
         public IActionResult ForgetPasswordConfirmation()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ChangePassword()
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user != null)
+            {
+                if (!await _userManager.HasPasswordAsync(user))
+                {
+                    return RedirectToAction(nameof(AddPassword));
+                }
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            if (!ModelState.IsValid) { return View(model); }
+
+
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user == null)
+            {
+                ViewBag.ErrorTitle = $"The user with the specified Id = {user.Id} cannot be found";
+                ViewBag.ErrorMessage = $"Our support team is solving your problem.";
+                return View("notfound");
+            }
+
+            var result = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
+
+
+            if (!result.Succeeded)
+            {
+                foreach (var errror in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, errror.Description);
+                }
+
+                return View();
+            }
+            return View("changepasswordconfirmation");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AddPassword()
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user != null)
+            {
+                if (await _userManager.HasPasswordAsync(user))
+                {
+                    return RedirectToAction(nameof(ChangePassword));
+                }
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddPassword(AddPasswordViewModel model)
+        {
+            if (!ModelState.IsValid) { return View(model); }
+
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user != null)
+            {
+                var result = await _userManager.AddPasswordAsync(user, model.NewPassword);
+
+                if (!result.Succeeded)
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+
+                    return View();
+                }
+            }
+            await _signInManager.RefreshSignInAsync(user);
+
+            return RedirectToAction(nameof(AddPasswordConfirmation));
+
+        }
+
+        public IActionResult AddPasswordConfirmation()
         {
             return View();
         }

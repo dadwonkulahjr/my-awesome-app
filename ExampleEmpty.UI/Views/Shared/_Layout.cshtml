@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Example App</title>
+    <title>@ViewData["Title"]</title>
     <environment include="Development">
         <link href="~/font-awesome/css/all.css" rel="stylesheet" />
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -34,29 +34,32 @@
                             <a class="nav-link text-white" asp-controller="Admin" asp-action="Index">Home&nbsp;<i class="fas fa-home"></i></a>
                         </li>
                         <!-- Dropdown -->
-                        @if (_signInManager.IsSignedIn(User) && User.IsInRole("Administrator") || User.IsInRole("SuperAdministrator") && User.IsInRole("Test"))
-                        {
+                        @*@if (_signInManager.IsSignedIn(User) && User.IsInRole("Administrator") || User.IsInRole("SuperAdministrator") && User.IsInRole("Test"))
+                        {*@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-white" asp-controller="superadmin" asp-action="allroles" id="navbardrop" data-toggle="dropdown">
                                     Manage&nbsp; <i class="fas fa-cogs"></i>
                                 </a>
                                 <div class="dropdown-menu">
-                                    @if (_signInManager.IsSignedIn(User) && User.IsInRole("Administrator"))
-                                    {
-                                        <a class="dropdown-item text-dark" asp-controller="admin" asp-action="index">
-                                            List&nbsp;<i class="fas fa-list"></i>
-                                        </a>
-                                    }
+                                    @*@if (_signInManager.IsSignedIn(User) && User.IsInRole("Administrator"))
+        {*@
+                                    <a class="dropdown-item text-dark" asp-controller="admin" asp-action="index">
+                                        List&nbsp;<i class="fas fa-list"></i>
+                                    </a>
+                                    @*}*@
                                     <a class="dropdown-item text-dark" asp-controller="superadmin" asp-action="allroles">
                                         Mange Roles&nbsp;<i class="fas fa-tachometer-alt"></i>
                                     </a>
                                     <a class="dropdown-item text-dark" asp-action="getallusers" asp-controller="superadmin">
                                         Manage Users&nbsp;<i class="fas fa-users"></i>
                                     </a>
+                                    <a class="dropdown-item text-dark" asp-action="changepassword" asp-controller="account">
+                                        Password&nbsp;<i class="fas fa-key"></i>
+                                    </a>
                                 </div>
 
                             </li>
-                        }
+                        @*}*@
                     </ul>
 
                     <partial name="_LoginPartial" />

@@ -42,12 +42,12 @@
                                         </div>
                                     </div>
                                     <div class="py-2">
-                                        <button type="submit" class="btn btn-success form-control">
+                                        <button type="submit" class="btn btn-primary form-control">
                                             <i class="fas fa-sign-in-alt"></i>&nbsp;Log in
                                         </button>
                                     </div>
                                     <div class="py-1">
-                                        <a asp-action="index" asp-controller="admin" class="btn btn-primary form-control">
+                                        <a asp-action="index" asp-controller="admin" class="btn btn-success form-control">
                                             <i class="fas fa-long-arrow-alt-left"></i>&nbsp;Back to List
                                         </a>
                                     </div>
@@ -87,7 +87,7 @@
                                 @foreach (var provider in Model.ExternalLogins)
                                 {
                                     <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Login using your @provider.DisplayName account">
-                                        <i class="fab fa-google-plus"></i>&nbsp;@provider.DisplayName
+                                       @provider.DisplayName
 
                                     </button>
                                 }
