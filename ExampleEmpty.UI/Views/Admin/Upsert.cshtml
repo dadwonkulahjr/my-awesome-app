@@ -22,7 +22,7 @@
             <input type="hidden" asp-for="@Model.ExistingPhotoPath" />
             <input type="hidden" asp-for="@Model.CustomerId" />
             <input type="hidden" asp-for="@Model.EncryptedCustomerId" />
-         
+
         }
         <div class="row px-2 mx-2 backgroundWhite border shadow" style="margin-top:30px;">
             <div class="text-danger" asp-validation-summary="ModelOnly"></div>
@@ -37,34 +37,34 @@
                     </div>
                     <div class="col-9">
                         <input asp-for="Name" class="form-control" placeholder="Name..." />
-                        <span asp-validation-for="Name" class="text-danger"></span>
+                        <span asp-validation-for="Name" class="text-primary"></span>
                     </div>
                 </div>
-                <div class="form-group row">
+                <div class="form-group row mt-1">
                     <div class="col-3">
                         <label asp-for="Address"></label>
                     </div>
                     <div class="col-9">
                         <input asp-for="Address" class="form-control" placeholder="Address..." />
-                        <span asp-validation-for="Address" class="text-danger"></span>
+                        <span asp-validation-for="Address" class="text-primary"></span>
                     </div>
                 </div>
-                <div class="form-group row">
+                <div class="form-group row mt-1">
                     <div class="col-3">
-                        <label asp-for="Gender"></label>
+                        <label asp-for="Gender" class="form-label"></label>
                     </div>
                     <div class="col-9">
-                        <select class="custom-select" asp-for="Gender" asp-items="Html.GetEnumSelectList<Gender>()">
+                        <select class="form-select" asp-for="Gender" asp-items="Html.GetEnumSelectList<Gender>()">
                             <option value="">-Choose gender--</option>
                         </select>
-                        <span asp-validation-for="Gender" class="text-danger"></span>
+                        <span asp-validation-for="Gender" class="text-primary"></span>
                     </div>
                 </div>
                 @if (Model.CustomerId == 0)
                 {
                     //Create
 
-                    <div class="form-group row">
+                    <div class="form-group row mt-1">
                         <div class="col-3">
                             <label asp-for="Photo"></label>
                         </div>
@@ -76,22 +76,33 @@
                 else
                 {
                     //Update
-                    <div class="form-group row">
+                    <div class="form-group row mt-1">
                         <div class="col-3">
-                            <label asp-for="Photo"></label>
+                            <label asp-for="Photo" class="form-label"></label>
                         </div>
                         <div class="col-9">
-                            <input asp-for="Photo" id="uploadBox" />
+                            <input asp-for="Photo" class="form-control" id="uploadBox" />
                         </div>
                     </div>
                 }
-                <div class="form-group row">
+                <div class="form-group row mt-3">
                     <div class="col-9 offset-3">
                         <div class="row">
                             <div class="col-6 col-12">
-                                <button type="submit" class="btn btn-primary form-control" style="height:50px;">
-                                    <i class="fas fa-plus"></i>&nbsp;@(Model.CustomerId != 0 ? "Update existing customer" : "Create new customer")
-                                </button>
+                                @if (Model.CustomerId == 0)
+                                {
+
+
+                                    <button type="submit" class="btn btn-info form-control" style="height:50px;">
+                                        <i class="fas fa-plus"></i>&nbsp;Add
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button type="submit" class="btn btn-info form-control" style="height:50px;">
+                                        <i class="fa fa-pencil-alt"></i>&nbsp;Update
+                                    </button>
+                                }
                             </div>
                             <div class="col-12 mt-2">
                                 <a class="btn btn-success form-control" asp-action="Index" style="height:50px;">

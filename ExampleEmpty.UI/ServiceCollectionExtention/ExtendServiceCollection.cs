@@ -43,6 +43,7 @@ namespace ExampleEmpty.UI.ServiceCollectionExtention
                 options.Filters.Add(new AuthorizeFilter(policy));
             }).AddControllersAsServices()
               .AddXmlSerializerFormatters();
+        
 
             services.AddScoped<ICustomerRepository, CustomerSQLRepository>();
             services.AddDbContextPool<ApplicationDbContext>(options =>
@@ -58,6 +59,9 @@ namespace ExampleEmpty.UI.ServiceCollectionExtention
 
 
                 options.Tokens.EmailConfirmationTokenProvider = "CustomEmailConfirmation";
+
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
 
             }).AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders()

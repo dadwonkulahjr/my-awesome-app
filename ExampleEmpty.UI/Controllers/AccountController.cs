@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -115,7 +116,7 @@ namespace ExampleEmpty.UI.Controllers
                 return View("Login", model);
             }
 
-            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: model.RememberMe, lockoutOnFailure: false);
+            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: model.RememberMe, lockoutOnFailure: true);
 
             if (result.Succeeded)
             {
@@ -128,10 +129,21 @@ namespace ExampleEmpty.UI.Controllers
                     return RedirectToAction("index", "admin");
                 }
             }
+            if (result.IsLockedOut)
+            {
+                return View(nameof(AccountLocked));
+            }
+
+
             ModelState.AddModelError(string.Empty, "Invalid Login attempt");
 
             return View(model);
 
+        }
+
+        public IActionResult AccountLocked()
+        {
+            return View();
         }
 
         [HttpPost]
@@ -334,17 +346,15 @@ namespace ExampleEmpty.UI.Controllers
             {
                 var result = await _userManager.ResetPasswordAsync(user, model.Token, model.NewPassword);
 
-                if (!result.Succeeded)
+                if (result.Succeeded)
                 {
-                    foreach (var error in result.Errors)
+                    if(await _userManager.IsLockedOutAsync(user))
                     {
-                        ModelState.AddModelError(string.Empty, error.Description);
+                        await _userManager.SetLockoutEndDateAsync(user, DateTimeOffset.UtcNow);
                     }
-                    return View();
-                }
-                await _signInManager.RefreshSignInAsync(user);
-                return RedirectToAction(nameof(ResetPasswordConfirmation));
 
+                    return RedirectToAction(nameof(ResetPasswordConfirmation));
+                }
 
             }
 
@@ -451,6 +461,12 @@ namespace ExampleEmpty.UI.Controllers
         }
 
         public IActionResult AddPasswordConfirmation()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult LogoutLink()
         {
             return View();
         }

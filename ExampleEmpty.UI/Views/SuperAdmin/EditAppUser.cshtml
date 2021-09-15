@@ -23,7 +23,7 @@
                             <span class="text-danger" asp-validation-for="FirstName"></span>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col mt-2">
                         <div>
                             <input asp-for="LastName" placeholder="Lastname..." class="form-control" />
                             <span class="text-danger" asp-validation-for="LastName"></span>
@@ -37,7 +37,7 @@
                             <span class="text-danger" asp-validation-for="Address"></span>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col mt-2">
                         <div>
                             <input asp-for="Email" placeholder="Email..." class="form-control" />
                             <span class="text-danger" asp-validation-for="Email"></span>
@@ -47,13 +47,13 @@
                 <div class="form-row py-2">
                     <div class="col">
                         <div>
-                            <select asp-for="Gender" asp-items="Html.GetEnumSelectList<Gender>()" class="custom-select">
+                            <select asp-for="Gender" asp-items="Html.GetEnumSelectList<Gender>()" class="form-select">
                                 <option value="">--Choose gender--</option>
                             </select>
                             <span class="text-danger" asp-validation-for="Gender"></span>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col mt-2">
                         <div>
                             <input asp-for="Username" placeholder="Username..." class="form-control" />
                             <span class="text-danger" asp-validation-for="Username"></span>
@@ -62,12 +62,14 @@
                 </div>
                 <div class="form-row py-2">
                     <div class="col-12">
-                        <button class="btn btn-success btn-block">
-                            Update&nbsp;<i class="far fa-edit"></i>
+                        <button class="btn btn-info btn-block">
+                            Update&nbsp;<i class="fa fa-pencil-alt"></i>
                         </button>
-                        <a asp-action="getallusers" class="btn btn-primary btn-block">Back to List&nbsp;<i class="fas fa-long-arrow-alt-left"></i></a>
+                        <a asp-action="getallusers" class="btn btn-success btn-block">
+                            <i class="fas fa-long-arrow-alt-left"></i>&nbsp;Back to List
+                        </a>
                     </div>
-                    <div class="text-danger" asp-validation-summary="All"></div>
+                    <div class="text-primary" asp-validation-summary="All"></div>
                 </div>
 
 

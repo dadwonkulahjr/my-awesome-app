@@ -1,0 +1,16 @@
+﻿@{
+    ViewData["Title"] = "Account Locked";
+}
+
+<div class="border backgroundWhite container shadow" style="margin-top:30px;">
+    <h2 class="text-success"><i class="fas fa-key"></i>&nbsp;Change Password</h2>
+    <hr />
+    <div>
+        Your account is locked, please try again after
+        sometime or you may reset your password by clicking
+        here.
+        <a class="btn btn-link" asp-controller="account" asp-action="forgetpassword">
+            reset your password by clicking here..
+        </a>
+    </div>
+</div>

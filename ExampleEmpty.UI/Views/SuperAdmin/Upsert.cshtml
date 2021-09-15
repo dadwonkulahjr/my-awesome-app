@@ -33,22 +33,32 @@
                     </div>
                 }
 
-                <div class="form-group row">
+                <div class="form-group row mt-2">
                     <div class="col-3">
                         <label asp-for="RoleName"></label>
                     </div>
                     <div class="col-9">
                         <input asp-for="RoleName" class="form-control" placeholder="Role name..." />
-                        <span asp-validation-for="RoleName" class="text-danger"></span>
+                        <span asp-validation-for="RoleName" class="text-primary"></span>
                     </div>
                 </div>
-                <div class="form-group row">
+                <div class="form-group row mt-2">
                     <div class="col-9 offset-3">
                         <div class="row">
                             <div class="col-6 col-12">
-                                <button type="submit" class="btn btn-primary form-control" style="height:50px;">
-                                    @(Model.RoleId == string.Empty ? "Create Role" : "Update Role")&nbsp;<i class="far fa-plus-square"></i>
-                                </button>
+                                @if (Model.RoleId == string.Empty)
+                                {
+                                    <button type="submit" class="btn btn-info form-control" style="height:50px;">
+                                        <i class="far fa-plus-square"></i>&nbsp;Add
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button type="submit" class="btn btn-info form-control" style="height:50px;">
+                                        <i class="fa fa-pencil-alt"></i>&nbsp;Update
+                                    </button>
+                                }
+
                             </div>
                             <div class="col-12 mt-2">
                                 <a class="btn btn-success form-control" asp-action="allroles" style="height:50px;">
@@ -61,7 +71,7 @@
                 @if (Model.RoleId != string.Empty)
                 {
 
-                    <div class="row offset-3">
+                    <div class="row offset-3 mt-2">
                         <div class="col-sm-12 col-md-12">
                             <div class="card-deck">
                                 <div class="card" style="width:auto;">
@@ -88,7 +98,7 @@
                                         }
                                     </div>
                                     <div class="card-footer">
-                                        <a asp-action="edituserinrole" asp-controller="superadmin" asp-route-roleId="@Model.RoleId" class="btn btn-primary form-control h-auto">
+                                        <a asp-action="edituserinrole" asp-controller="superadmin" asp-route-roleId="@Model.RoleId" class="btn btn-info form-control h-auto">
                                             <i class="fas fa-user-plus"></i>&nbsp;Add Or Remove User&nbsp;<i class="fas fa-trash-alt"></i>
                                         </a>
 
